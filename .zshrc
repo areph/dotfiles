@@ -86,3 +86,11 @@ function tmux_automatically_attach_session()
     fi
 }
 tmux_automatically_attach_session
+
+function ranger() {
+    if [ -z "$RANGER_LEVEL" ]; then
+        /usr/local/bin/ranger $@
+    else
+        exit
+    fi
+}
