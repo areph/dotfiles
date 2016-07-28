@@ -25,6 +25,11 @@ if has('vim_starting') && dein#check_install()
 endif
 " }}}
 
+" Default plugin unread
+let g:loaded_gzip              = 1
+let g:loaded_zipPlugin         = 1
+
+
 " ================ General Config ====================
 
 set number                      "Line numbers are good
@@ -35,7 +40,8 @@ set showmode                    "Show current mode down the bottom
 set gcr=a:blinkon0              "Disable cursor blink
 set visualbell                  "No sounds
 set autoread                    "Reload files changed outside vim
-set cursorline
+"set cursorline
+set clipboard=unnamed,autoselect
 
 " Charset, Line ending -----------------
 set encoding=utf-8
@@ -131,7 +137,19 @@ set linebreak    "Wrap lines at convenient points
 
 " ================ Folds ============================
 
-set foldmethod=indent   "fold based on indent
+"set foldmethod=indent   "fold based on indent
+
+set foldenable
+set foldmethod=syntax
+
+autocmd InsertEnter * if !exists('w:last_fdm')
+            \| let w:last_fdm=&foldmethod
+            \| setlocal foldmethod=manual
+            \| endif
+autocmd InsertLeave,WinLeave * if exists('w:last_fdm')
+            \| let &l:foldmethod=w:last_fdm
+            \| unlet w:last_fdm
+            \| endif
 set foldnestmax=3       "deepest fold is 3 levels
 set nofoldenable        "dont fold by default
 
