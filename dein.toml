@@ -1,0 +1,87 @@
+[[plugins]]
+repo = 'Shougo/dein.vim'
+
+[[plugins]]
+repo = 'Shougo/unite.vim'
+
+[[plugins]]
+repo = 'Shougo/neocomplete.vim'
+on_i = 1
+
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+on_path = '.*'
+
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+
+[[plugins]]
+repo = 'kannokanno/previm'
+
+[[plugins]]
+repo = 'Shougo/neosnippet.vim'
+
+[[plugins]]
+repo = 'Shougo/neosnippet-snippets'
+
+[[plugins]]
+repo = 'honza/vim-snippets'
+
+[[plugins]]
+repo = 'basyura/unite-rails'
+
+[[plugins]]
+repo = 'tpope/vim-rails'
+
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+repo = 'rcmdnk/vim-markdown'
+
+[[plugins]]
+repo  = 'rcmdnk/vim-markdown'
+on_ft = ['markdown']
+
+[[plugins]]
+repo  = 'vim-ruby/vim-ruby'
+on_ft = ['ruby']
+
+[[plugins]]
+repo  = 'pocke/dicts'
+on_ft = ['ruby']
+
+[[plugins]]
+repo  = 'pocke/dicts'
+on_ft = ['ruby']
+
+[[plugins]]
+repo  = 'tpope/vim-bundler'
+on_ft = ['ruby']
+
+[[plugins]]
+repo  = 'thoughtbot/vim-rspec'
+on_ft = ['ruby']
+
+[[plugins]]
+repo  = 'todesking/ruby_hl_lvar.vim'
+on_ft = ['ruby']
+
+[[plugins]]
+repo  = 'tpope/vim-rails'
+on_ft = ['haml', 'ruby', 'eruby']
+
+[[plugins]]
+repo  = 'alpaca-tc/vim-endwise.git'
+on_i  = 1
+on_ft = ['ruby']
+
