@@ -1,0 +1,5 @@
+# zplug
+curl -sL zplug.sh/installer | zsh
+zplug install
+zplug load
+
