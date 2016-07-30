@@ -10,10 +10,6 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
 
-# Customize to your needs...
-for config_file ($HOME/.yadr/zsh/*.zsh) source $config_file
-
-
 function is_exists() { type "$1" >/dev/null 2>&1; return $?; }
 function is_osx() { [[ $OSTYPE == darwin* ]]; }
 function is_screen_running() { [ ! -z "$STY" ]; }
@@ -22,16 +18,14 @@ function is_screen_or_tmux_running() { is_screen_running || is_tmux_runnning; }
 function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
 function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
 
-function history-all { history -E 1 }
-
-function peco-history-selection() {
-    BUFFER=`history -n 1 | tail -r  | awk '!a[$0]++' | peco`
+function fzf-history-selection() {
+    BUFFER=`history -n 1 | tail  | awk '!a[$0]++' | fzf`
     CURSOR=$#BUFFER
     zle reset-prompt
 }
 
-zle -N peco-history-selection
-bindkey '^R' peco-history-selection
+zle -N fzf-history-selection
+bindkey '^R' fzf-history-selection
 
 function tmux_automatically_attach_session()
 {
@@ -89,3 +83,31 @@ function ranger() {
 function agvim () {
   vim $(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
 }
+
+source ~/.zplug/init.zsh
+
+zplug "stedolan/jq", from:gh-r, as:command \
+      | zplug "b4b4r07/emoji-cli", if:"which jq"
+zplug "b4b4r07/enhancd", of:enhancd.sh
+zplug "zsh-users/zsh-syntax-highlighting", nice:10
+zplug "zsh-users/zsh-completions"
+zplug "junegunn/fzf-bin", as:command, from:gh-r, file:fzf
+zplug "junegunn/fzf", as:command, of:bin/fzf-tmux
+
+zplug install
+zplug load
+
+
+## Alias settings
+alias ll='ls -la'
+alias la='ls -a'
+
+# Git
+alias gs='git status'
+alias gst='git status'
+alias gcm='git ci -m'
+alias gcim='git ci -m'
+alias ga='git add -A'
+alias gpl='git pull'
+alias gpl='git pull'
+alias less='less -r'
