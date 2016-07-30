@@ -1,0 +1,10 @@
+## Alias settings
+
+# Git
+alias gs='git status'
+alias gcm='git ci -m'
+alias gcim='git ci -m'
+alias ga='git add -A'
+alias gpl='git pull'
+alias gpl='git pull'
+alias less='less -r'
