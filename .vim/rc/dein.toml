@@ -17,10 +17,28 @@ repo = 'Shougo/neomru.vim'
 on_path = '.*'
 
 [[plugins]]
+repo = 'osyo-manga/vim-watchdogs'
+
+[[plugins]]
+repo = 'osyo-manga/shabadou.vim'
+
+[[plugins]]
+repo = 'terryma/vim-expand-region'
+
+[[plugins]]
 repo = 'itchyny/lightline.vim'
 
 [[plugins]]
 repo = 'thinca/vim-quickrun'
+
+[[plugins]]
+repo = 'kmnk/vim-unite-giti'
+
+[[plugins]]
+repo = 'KazuakiM/vim-qfstatusline'
+
+[[plugins]]
+repo = 'KazuakiM/vim-qfsigns'
 
 [[plugins]]
 repo = 'plasticboy/vim-markdown'

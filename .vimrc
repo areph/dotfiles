@@ -94,6 +94,8 @@ colorscheme solarized
 "turn on syntax highlighting
 syntax on
 
+let mapleader=","
+
 " ================ Turn Off Swap Files ==============
 
 set noswapfile
@@ -237,7 +239,7 @@ let g:lightline = {
       \   'ctrlpmark': 'CtrlPMark',
       \ },
       \ 'component_expand': {
-      \   'syntastic': 'SyntasticStatuslineFlag',
+      \   'syntaxcheck': 'qfstatusline#Update',
       \ },
       \ 'component_type': {
       \   'syntastic': 'error',
@@ -354,6 +356,115 @@ set t_Co=256
 "}}}
 
 
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
+
+"quickrun
+
+augroup ansiesc
+  autocmd!
+  autocmd FileType quickrun AnsiEsc
+augroup END
+
+" シンタックスチェックは<Leader>+wで行う
+nnoremap <Leader>w :<C-u>WatchdogsRun<CR>
+
+" let g:watchdogs_check_BufWritePost_enables = {
+"       \   'sh':         1,
+"       \   'sass':       1,
+"       \   'scss':       1
+"       \}
+"       " \   "javascript": 1,
+"       " \   "ruby": 1,
+
+let g:watchdogs_check_CursorHold_enable = 0
+let g:watchdogs_check_BufWritePost_enable = 0
+
+" <C-c> で実行を強制終了させる
+" quickrun.vim が実行していない場合には <C-c> を呼び出す
+nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
+
+"watchdogs_checker
+let g:quickrun_config = {
+      \   '_' : {
+      \       'hook/close_quickfix/enable_exit' : 1,
+      \       'hook/close_buffer/enable_failure' : 1,
+      \       'hook/close_buffer/enable_empty_data' : 1,
+      \       'outputter' : 'multi:buffer:quickfix',
+      \       'outputter/buffer/split' : ':botright 8sp',
+      \       'runner' : 'vimproc',
+      \       'runner/vimproc/updatetime' : 40,
+      \   },
+      \   'watchdogs_checker/_' : {
+      \       'outputter/quickfix/open_cmd' : '',
+      \       'hook/qfsigns_update/enable_exit' : 1,
+      \       'hook/back_window/enable_exit' : 1,
+      \       'hook/back_window/priority_exit' : 100,
+      \   },
+      \}
+let g:quickrun_config['ruby/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/rubocop',
+      \       'cmdopt' : '-S -a -D'
+      \   }
+let g:quickrun_config['ruby.rails/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/rubocop',
+      \       'cmdopt' : '-R -S -a -D'
+      \   }
+let g:quickrun_config['ruby.rspec/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/rubocop',
+      \       'cmdopt' : '-R -S -a -D'
+      \   }
+let g:quickrun_config['coffee/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/coffeelint',
+      \   }
+let g:quickrun_config['jade/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/jade'
+      \   }
+let g:quickrun_config['css/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/csslint'
+      \   }
+let g:quickrun_config['javascript/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/eslint',
+      \       'cmdopt' : '--fix'
+      \  }
+let g:quickrun_config['javascript.jsx/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/eslint',
+      \       'cmdopt' : '--fix'
+      \  }
+let g:quickrun_config['markdown/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/textlint'
+      \  }
+let g:quickrun_config['sh/watchdogs_checker'] = {
+      \       'command' : 'shellcheck', 'cmdopt' : '-f gcc',
+      \       'type': 'watchdogs_checker/shellcheck'
+      \  }
+let g:quickrun_config['vim/watchdogs_checker'] = {
+      \     'type': executable('vint') ? 'watchdogs_checker/vint' : '',
+      \     'command'   : 'vint',
+      \     'exec'      : '%c %o %s:p' ,
+      \   }
+let g:quickrun_config['json/watchdogs_checker'] = {
+      \       'type': 'watchdogs_checker/jsonlint',
+      \       'cmdopt' : '-i'
+      \  }
+
+" execute
+let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
+
+" " If syntax error, cursor is moved at line setting sign.
+"let g:qfsigns#AutoJump = 1
+
+" If syntax error, view split and cursor is moved at line setting sign.
+"let g:qfsigns#AutoJump = 2
+
+let g:Qfstatusline#UpdateCmd = function('lightline#update')
+" watchdogs.vim の設定を追加
+call watchdogs#setup(g:quickrun_config)
+
+let g:unite_force_overwrite_statusline    = 0
+let g:vimfiler_force_overwrite_statusline = 0
+let g:vimshell_force_overwrite_statusline = 0
+
 "" {{{Unite
 " " インサートモードで開始
 let g:unite_enable_start_insert=1
@@ -365,6 +476,11 @@ let g:unite_source_rec_max_cache_files = 50000
 " let g:unite_source_rec_min_cache_files = 100
 
 
+let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
+let g:unite_source_menu_menus.git = {
+    \ 'description' : '            gestionar repositorios git
+        \                            ⌘ [espacio]g',
+    \}
 augroup unite_global_keymap
   autocmd!
   autocmd BufEnter * :call s:unite_keymap()
@@ -435,6 +551,11 @@ function! s:unite_keymap()
   noremap <silent> [unite]et :<C-u>Unite rails/spec<CR>
   noremap <silent> [unite]el :<C-u>Unite rails/log<CR>
   noremap <silent> [unite]ed :<C-u>Unite rails/db<CR>
+
+  "unite-giti
+  noremap <silent> [unite]ti :<C-u>Unite giti<CR>
+  noremap <silent> [unite]ts :<C-u>Unite giti/status<CR>
+
 endfunction
 "unite.vimを開いている間のキーマッピング
 augroup unite_local_keymap
@@ -464,5 +585,6 @@ function! s:unite_my_settings()
   "ctrl+oでその場所に開く
   nnoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
   inoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
+
 endfunction
 "}}}
