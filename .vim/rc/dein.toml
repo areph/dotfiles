@@ -38,11 +38,25 @@ repo = 'Shougo/neosnippet-snippets'
 repo = 'honza/vim-snippets'
 
 [[plugins]]
+repo = 'cohama/lexima.vim'
+
+[[plugins]]
 repo = 'basyura/unite-rails'
 
 [[plugins]]
 repo = 'tpope/vim-rails'
 
+[[plugins]]
+repo = 'mattn/emmet-vim'
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'hail2u/vim-css3-syntax'
+
+[[plugins]]
+repo = 'pangloss/vim-javascript'
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'

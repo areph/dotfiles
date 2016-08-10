@@ -1,4 +1,4 @@
-" Use Vim settings, rather then Vi settings (much better!).
+" Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
 set nocompatible
 
@@ -49,7 +49,7 @@ scriptencoding utf-8
 
 " Cursol ---------------
 set backspace=indent,eol,start " Backspaceキーの影響範囲に制限を設けない
-set whichwrap=b,s,h,l,<,>,[,]  " 行頭行末の左右移動で行をまたぐ
+"set whichwrap=b,s,h,l,<,>,[,]  " 行頭行末の左右移動で行をまたぐ
 set lazyredraw
 
 " Files ---------------
@@ -76,6 +76,9 @@ set imsearch=-1
 ""Ctrl-Cでインサートモードを抜ける
 inoremap <C-c> <ESC>
 
+" 自動コメントフォーマットをオフ
+set formatoptions-=ro
+
 " Markdownプレビュー
 au BufRead,BufNewFile *.md set filetype=markdown
 let g:previm_open_cmd = 'open -a chrome'
@@ -90,12 +93,6 @@ colorscheme solarized
 
 "turn on syntax highlighting
 syntax on
-
-" Change leader to a comma because the backslash is too far away
-" That means all \x commands turn into ,x
-" The mapleader has to be set before vundle starts loading all 
-" the plugins.
-let mapleader=","
 
 " ================ Turn Off Swap Files ==============
 
