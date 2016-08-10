@@ -220,7 +220,7 @@ augroup MyAutoCmd
 augroup END
 
 
-" lightline.vim settings <-
+"" {{{lightline
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -351,9 +351,24 @@ let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 set laststatus=2
 set t_Co=256
-" lightline.vim settings <-
+"}}}
 
 
+"" {{{Unite
+" " インサートモードで開始
+let g:unite_enable_start_insert=1
+" 最近のファイルの個数制限
+let g:unite_source_file_mru_limit           = 1000
+let g:unite_source_file_mru_filename_format = ''
+" file_recのキャッシュ
+let g:unite_source_rec_max_cache_files = 50000
+" let g:unite_source_rec_min_cache_files = 100
+
+
+augroup unite_global_keymap
+  autocmd!
+  autocmd BufEnter * :call s:unite_keymap()
+augroup END
 "prefix keyの設定
 function! s:unite_keymap()
   nnoremap [unite] <Nop>
@@ -362,7 +377,7 @@ function! s:unite_keymap()
   nmap <Space> [unite]
 
   nnoremap <silent> [unite]i :<C-u>Unite<Space>
-  ""スペースキーとaキーでカレントディレクトリを表示
+  "スペースキーとaキーでカレントディレクトリを表示
   nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
   "スペースキーとmキーでプロジェクト内で最近開いたファイル一覧を表示
   nnoremap <silent> [unite]m :<C-u>UniteWithProjectDir<Space>file_mru<CR>
@@ -373,9 +388,6 @@ function! s:unite_keymap()
   "スペースキーとbキーでバッファを表示
   nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
 
-  " "スペースキーと]キーでtagsを検索
-  vnoremap <silent> [unite]] :<C-u>UniteWithCursorWord -immediately tag:<C-r><C-W> <CR>
-  nnoremap <silent> [unite]] :<C-u>UniteWithCursorWord -immediately tag:<C-r><C-W> <CR>
   augroup unite_jump
     autocmd!
     autocmd BufEnter *
@@ -384,13 +396,8 @@ function! s:unite_keymap()
           \|  endif
   augroup END
 
-  ""tweet vimのアカウントを切り替え
-  nnoremap <silent> [unite]s :<C-u>Unite<space> tweetvim/account<CR>
-
   ""スペースキーとyキーでヒストリ/ヤンクを表示
   nnoremap <silent> [unite]y :<C-u>Unite<Space> yankround<CR>
-  ""スペースキーとhキーで:helpを検索
-  nnoremap <silent> [unite]h :<C-u>Unite<Space> help -buffer-name=search-buffer<CR>
   "スペースキーとoキーでoutline
   nnoremap <silent> [unite]o :<C-u>Unite<Space> outline -prompt-direction="top"<CR>
   "unite-quickfixを呼び出し
@@ -440,8 +447,6 @@ function! s:unite_my_settings()
   "ESCでuniteを終了
   nmap <buffer> <ESC> <Plug>(unite_exit)
   imap <buffer> <ESC><ESC> <Plug>(unite_exit)
-  "入力モードのときjjでノーマルモードに移動
-  " imap <buffer> jj <Plug>(unite_insert_leave)
   " normal modeでも基本の挙動は一致させる
   nmap <buffer> <C-n> j
   nmap <buffer> <C-p> k
@@ -460,3 +465,4 @@ function! s:unite_my_settings()
   nnoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
   inoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
 endfunction
+"}}}
