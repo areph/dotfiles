@@ -1,84 +1,105 @@
+# パッケージ管理
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
+# ファイル操作
 [[plugins]]
 repo = 'Shougo/unite.vim'
 
+# snippets
 [[plugins]]
 repo = 'Shougo/neocomplete.vim'
+if = 'has("lua")'
 on_i = 1
-
-[[plugins]]
-repo = 'Shougo/vimproc.vim'
-build = 'make'
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 on_path = '.*'
 
+# 非同期実行
 [[plugins]]
 repo = 'osyo-manga/vim-watchdogs'
+
+# 非同期実行
+[[plugins]]
+repo = 'thinca/vim-quickrun'
+
+# 非同期実行
+[[plugins]]
+repo = 'Shougo/vimproc.vim'
+build = 'make'
 
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
 
-[[plugins]]
-repo = 'terryma/vim-expand-region'
-
-[[plugins]]
-repo = 'itchyny/lightline.vim'
-
-[[plugins]]
-repo = 'thinca/vim-quickrun'
-
-[[plugins]]
-repo = 'kmnk/vim-unite-giti'
-
+# quickfixの内容をステータスバーに表示
 [[plugins]]
 repo = 'KazuakiM/vim-qfstatusline'
 
+# エラー位置にカーソルが来たときにステータスバーに表示
+[[plugins]]
+repo = 'dannyob/quickfixstatus'
+
+[[plugins]]
+repo = 'terryma/vim-expand-region'
+
+# パワーライン
+[[plugins]]
+repo = 'itchyny/lightline.vim'
+
+# VimからGit操作
+[[plugins]]
+repo = 'tpope/vim-fugitive'
+
+# シンタックスエラーの場合に行番号へサイン表示
 [[plugins]]
 repo = 'KazuakiM/vim-qfsigns'
 
+# wakatimeでの操作ログ取得
 [[plugins]]
-repo = 'plasticboy/vim-markdown'
+repo = 'wakatime/vim-wakatime'
 
-[[plugins]]
-repo = 'kannokanno/previm'
-
+# snippet plugin
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
 
+# snippets
 [[plugins]]
 repo = 'Shougo/neosnippet-snippets'
 
+# snippets
 [[plugins]]
 repo = 'honza/vim-snippets'
 
+# 閉じカッコをインテリセンスに
 [[plugins]]
 repo = 'cohama/lexima.vim'
+on_i = 1
 
+# Rails関連ディレクトリをuniteで操作
 [[plugins]]
 repo = 'basyura/unite-rails'
+on_ft = ['ruby']
 
+# :Aと:Rで該当するRailsファイルに移動する
 [[plugins]]
 repo = 'tpope/vim-rails'
+on_ft = ['ruby']
 
-[[plugins]]
-repo = 'mattn/emmet-vim'
-
+# テキストオブジェクト拡張
 [[plugins]]
 repo = 'tpope/vim-surround'
 
 [[plugins]]
 repo = 'hail2u/vim-css3-syntax'
+on_ft = ['css', 'scss']
 
 [[plugins]]
 repo = 'pangloss/vim-javascript'
+on_ft = ['javascript']
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
-repo = 'rcmdnk/vim-markdown'
 
 [[plugins]]
 repo  = 'rcmdnk/vim-markdown'
@@ -95,6 +116,7 @@ on_ft = ['ruby']
 [[plugins]]
 repo  = 'pocke/dicts'
 on_ft = ['ruby']
+lazy = 1
 
 [[plugins]]
 repo  = 'tpope/vim-bundler'

@@ -76,6 +76,12 @@ set imsearch=-1
 ""Ctrl-Cでインサートモードを抜ける
 inoremap <C-c> <ESC>
 
+".vimrcの編集用
+nnoremap <Space>. :<C-u>tabedit $HOME/dotfiles/.vimrc<CR>
+
+".vimプラグイン管理ファイルの編集用
+nnoremap <Space>, :<C-u>tabedit $HOME/dotfiles/.vim/rc/dein.toml<CR>
+
 " 自動コメントフォーマットをオフ
 set formatoptions-=ro
 
@@ -202,6 +208,14 @@ inoremap <C-d> <Del>
 inoremap <C-k> <C-o>D<Right>
 inoremap <C-u> <C-o>d^
 inoremap <C-w> <C-o>db
+
+" 波線で表示する場合は、以下の設定を行う
+" エラーを赤字の波線で
+"execute "highlight qf_error_ucurl gui=undercurl guisp=Red"
+"let g:hier_highlight_group_qf  = "qf_error_ucurl"
+"" 警告を青字の波線で
+"execute "highlight qf_warning_ucurl gui=undercurl guisp=Blue"
+"let g:hier_highlight_group_qfw = "qf_warning_ucurl"
 
 augroup add_syntax_hilight
   autocmd!
@@ -432,7 +446,9 @@ let g:quickrun_config['javascript.jsx/watchdogs_checker'] = {
       \       'cmdopt' : '--fix'
       \  }
 let g:quickrun_config['markdown/watchdogs_checker'] = {
-      \       'type': 'watchdogs_checker/textlint'
+      \       'command': 'textlint',
+      \       'type': 'watchdogs_checker/textlint',
+      \       'cmdopt' : '--fix'
       \  }
 let g:quickrun_config['sh/watchdogs_checker'] = {
       \       'command' : 'shellcheck', 'cmdopt' : '-f gcc',
@@ -503,6 +519,8 @@ function! s:unite_keymap()
   nnoremap <silent> [unite]d :<C-u>Unite<Space> directory_mru<CR>
   "スペースキーとbキーでバッファを表示
   nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+  "スペースキーとpキーでプロジェクト内を表示
+  nnoremap <silent> [unite]p :<C-u>Unite file_rec/async:!<CR>
 
   augroup unite_jump
     autocmd!
@@ -588,3 +606,124 @@ function! s:unite_my_settings()
 
 endfunction
 "}}}
+
+" neocomplete {{{
+let g:neocomplete#enable_at_startup               = 1
+"let g:neocomplete#auto_completion_start_length    = 2
+let g:neocomplete#enable_ignore_case              = 1
+" let g:neocomplete#enable_smart_case               = 1
+let g:neocomplete#enable_cursor_hold_i            = 1
+" let g:neocomplete#enable_camel_case               = 1
+" let g:neocomplete#enable_fuzzy_completion         = 1
+let g:neocomplete#use_vimproc                     = 1
+let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
+
+" rsense
+let g:neocomplete#force_omni_input_patterns      = {}
+let g:neocomplete#force_omni_input_patterns = {
+      \   'ruby' : '[^. *\t]\.\|\h\w*::',
+      \   'rails' : '[^. *\t]\.\|\h\w*::',
+      \   'rspec' : '[^. *\t]\.\|\h\w*::',
+      \   'eruby' : '[^. *\t]\.\|\h\w*::',
+      \   'ruby.rails' : '[^. *\t]\.\|\h\w*::',
+      \   'ruby.rspec' : '[^. *\t]\.\|\h\w*::',
+      \   'eruby.html' : '[^. *\t]\.\|\h\w*::'
+      \}
+
+let g:rsenseUseOmniFunc = 1
+
+let g:neocomplete#sources#dictionary#dictionaries = {
+      \   'ruby': $HOME . '/.cache/dein/repos/github.com/pocke/dicts/ruby.dict',
+      \ }
+
+" "NeoSnippet.vim
+let g:neosnippet#enable_snipmate_compatibility = 1
+" remove ${x} marker when switching normal mode
+let g:neosnippet#enable_auto_clear_markers = 1
+" Tell Neosnippet about the other snippets
+let g:neosnippet#snippets_directory='~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets/, ~/.cache/dein/repos/github.com/honza/vim-snippets/snippets/'
+
+" "NeoSnippet.vim
+let g:neosnippet#enable_snipmate_compatibility = 1
+" remove ${x} marker when switching normal mode
+let g:neosnippet#enable_auto_clear_markers = 1
+" Plugin key-mappings.
+imap <Nul> <C-Space>
+imap <C-Space>     <Plug>(neosnippet_expand_or_jump)
+smap <C-Space>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-Space>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For snippet_complete marker.
+if has('conceal')
+  set conceallevel=2 concealcursor=i
+endif
+
+" rails
+"   autocmd!
+"   autocmd BufEnter * if exists("b:rails_root") | NeoCompleteSetFileType ruby.rails | endif
+"   autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoCompleteSetFileType ruby.rspec | endif
+" augroup END
+let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
+
+" enable ruby & rails snippet only rails file
+function! s:RailsSnippet()
+  if exists('b:rails_root') && (&filetype == 'ruby')
+    set ft=ruby.rails
+  endif
+endfunction
+
+function! s:RSpecSnippet()
+  if (expand('%') =~ "_spec\.rb$") || (expand('%') =~ "^spec.*\.rb$")
+    set ft=ruby.rspec
+  endif
+endfunction
+
+augroup rails_snippet
+  autocmd!
+  au BufEnter * call s:RailsSnippet()
+  au BufEnter * call s:RSpecSnippet()
+augroup END
+
+" open-browser.vim
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
+
+set cmdheight=2
+
+" ranger
+function! RangeChooser()
+  let temp = tempname()
+  " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
+  " with ranger 1.4.2 through 1.5.0 instead.
+  "exec 'silent !ranger --choosefile=' . shellescape(temp)
+  if has("gui_running")
+    exec 'silent !xterm -e ranger --choosefiles=' . shellescape(temp)
+  else
+    exec 'silent !ranger --choosefiles=' . shellescape(temp)
+  endif
+  if !filereadable(temp)
+    redraw!
+    " Nothing to read.
+    return
+  endif
+  let names = readfile(temp)
+  if empty(names)
+    redraw!
+    " Nothing to open.
+    return
+  endif
+  " Edit the first item.
+  exec 'edit ' . fnameescape(names[0])
+  " Add any remaning items to the arg list/buffer list.
+  for name in names[1:]
+    exec 'argadd ' . fnameescape(name)
+  endfor
+  redraw!
+endfunction
+command! -bar RangerChooser call RangeChooser()
+nnoremap <leader>r :<C-U>RangerChooser<CR>
