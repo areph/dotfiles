@@ -84,18 +84,18 @@ function agvim () {
   vim $(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
 }
 
-source ~/.zplug/init.zsh
+#source ~/.zplug/init.zsh
 
-zplug "stedolan/jq", from:gh-r, as:command \
-      | zplug "b4b4r07/emoji-cli", if:"which jq"
-zplug "b4b4r07/enhancd", of:enhancd.sh
-zplug "zsh-users/zsh-syntax-highlighting", nice:10
-zplug "zsh-users/zsh-completions"
-zplug "junegunn/fzf-bin", as:command, from:gh-r, file:fzf
-zplug "junegunn/fzf", as:command, of:bin/fzf-tmux
-
-zplug install
-zplug load
+#zplug "stedolan/jq", from:gh-r, as:command \
+#      | zplug "b4b4r07/emoji-cli", if:"which jq"
+#zplug "b4b4r07/enhancd", of:enhancd.sh
+#zplug "zsh-users/zsh-syntax-highlighting", nice:10
+#zplug "zsh-users/zsh-completions"
+#zplug "junegunn/fzf-bin", as:command, from:gh-r, file:fzf
+#zplug "junegunn/fzf", as:command, of:bin/fzf-tmux
+#
+#zplug install
+#zplug load
 
 
 ## Alias settings
