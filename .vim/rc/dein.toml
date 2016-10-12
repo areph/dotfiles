@@ -102,6 +102,9 @@ on_ft = ['javascript']
 repo = 'tyru/open-browser.vim'
 
 [[plugins]]
+repo = 'kchmck/vim-coffee-script'
+
+[[plugins]]
 repo  = 'rcmdnk/vim-markdown'
 on_ft = ['markdown']
 
