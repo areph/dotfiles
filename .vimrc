@@ -748,3 +748,5 @@ if has('syntax')
 endif
 
 autocmd BufWritePre * :%s/\s\+$//ge
+
+nnoremap <C-k> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
