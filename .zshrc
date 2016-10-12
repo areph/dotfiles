@@ -9,6 +9,7 @@
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
 fi
+prompt steeef
 
 function is_exists() { type "$1" >/dev/null 2>&1; return $?; }
 function is_osx() { [[ $OSTYPE == darwin* ]]; }
@@ -18,14 +19,14 @@ function is_screen_or_tmux_running() { is_screen_running || is_tmux_runnning; }
 function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
 function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
 
-function fzf-history-selection() {
-    BUFFER=`history -n 1 | tail  | awk '!a[$0]++' | fzf`
+function peco-history-selection() {
+    BUFFER=`history -n 0 | tail  | awk '!a[$0]++' | peco`
     CURSOR=$#BUFFER
     zle reset-prompt
 }
 
-zle -N fzf-history-selection
-bindkey '^R' fzf-history-selection
+zle -N peco-history-selection
+bindkey '^R' peco-history-selection
 
 function tmux_automatically_attach_session()
 {
@@ -74,7 +75,7 @@ tmux_automatically_attach_session
 
 function ranger() {
     if [ -z "$RANGER_LEVEL" ]; then
-        /usr/local/bin/ranger $@
+        /usr/bin/ranger $@
     else
         exit
     fi
@@ -97,6 +98,8 @@ function agvim () {
 #zplug install
 #zplug load
 
+export GOPATH="$HOME/.go"
+export PATH=$PATH:$HOME/.go/bin
 
 ## Alias settings
 alias ll='ls -la'
@@ -111,3 +114,14 @@ alias ga='git add -A'
 alias gpl='git pull'
 alias gpl='git pull'
 alias less='less -r'
+
+alias rors='rails server -b 0.0.0.0'
+
+export PATH="$HOME/.rbenv/bin:$PATH" 
+eval "$(rbenv init - zsh)"
+
+export EDITOR=vim
+
+setopt extended_history
+
+alias rubo='bundle exec rubocop'
