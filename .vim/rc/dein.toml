@@ -148,3 +148,7 @@ repo = 'LeafCage/yankround.vim'
 # マルチカーソル
 [[plugins]]
 repo = 'terryma/vim-multiple-cursors'
+
+# インデント可視化
+[[plugins]]
+repo = 'Yggdroot/indentLine'
