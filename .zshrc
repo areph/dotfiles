@@ -19,10 +19,16 @@ function is_screen_or_tmux_running() { is_screen_running || is_tmux_runnning; }
 function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
 function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
 
+
 function peco-history-selection() {
-    BUFFER=`history -n 0 | tail  | awk '!a[$0]++' | peco`
+    local tac
+    if which tac > /dev/null; then
+        tac="tac"
+    else
+        tac="tail -r"
+    fi
+    BUFFER=$(history -n 1 | eval $tac | awk '!a[$0]++' | peco --query "$LBUFFER")
     CURSOR=$#BUFFER
-    zle reset-prompt
 }
 
 zle -N peco-history-selection
@@ -117,7 +123,7 @@ alias less='less -r'
 
 alias rors='rails server -b 0.0.0.0'
 
-export PATH="$HOME/.rbenv/bin:$PATH" 
+export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh)"
 
 export EDITOR=vim
