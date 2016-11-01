@@ -152,3 +152,7 @@ repo = 'terryma/vim-multiple-cursors'
 # インデント可視化
 [[plugins]]
 repo = 'Yggdroot/indentLine'
+
+# ペースト時のインデントを無効
+[[plugins]]
+repo = 'ConradIrwin/vim-bracketed-paste'
