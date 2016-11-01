@@ -130,4 +130,31 @@ export EDITOR=vim
 
 setopt extended_history
 
-alias rubo='bundle exec rubocop'
+alias rubo='bundle exec rubocop -R -S -a -D'
+alias r='rails'
+alias g='git'
+alias b='bundle exec'
+alias brb='b rake db:rollback'
+alias brm='b rake db:migrate'
+alias brs='b rake db:migrate:reset'
+alias ag='ag -S --stats --pager "less -F"'
+
+cd(){
+
+    # 引数ありのときはそのままビルトインをコール
+    if [ $# -gt 0 ]; then
+        builtin cd "$@"
+        return
+    fi
+
+    # 引数無しでプロジェクトディレクトリの中にいるときはプロジェクトルートに移動
+    local gitroot=`git rev-parse --show-toplevel 2>/dev/null`
+    if [ ! "$gitroot" = "" ]; then
+        builtin cd "$gitroot"
+        return
+    fi
+
+    # それ以外はそのままビルトインをコール
+    builtin cd
+
+}
