@@ -18,3 +18,5 @@
   default = current
 [core]
   editor = vim
+[ghq]
+  root = ~/src
