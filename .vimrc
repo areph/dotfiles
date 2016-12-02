@@ -76,6 +76,10 @@ set imsearch=-1
 ""Ctrl-Cでインサートモードを抜ける
 inoremap <C-c> <ESC>
 
+" ノーマルモード時だけ ; と : を入れ替える
+nnoremap ; :
+nnoremap : ;
+
 ".vimrcの編集用
 nnoremap <Space>. :<C-u>tabedit $HOME/dotfiles/.vimrc<CR>
 
