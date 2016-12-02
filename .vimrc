@@ -82,6 +82,12 @@ nnoremap <Space>. :<C-u>tabedit $HOME/dotfiles/.vimrc<CR>
 ".vimプラグイン管理ファイルの編集用
 nnoremap <Space>, :<C-u>tabedit $HOME/dotfiles/.vim/rc/dein.toml<CR>
 
+" 行移動を改行コードを意識した移動へ
+nnoremap j gj
+nnoremap k gk
+nnoremap gj j
+nnoremap gk k
+
 " 自動コメントフォーマットをオフ
 set formatoptions-=ro
 
