@@ -101,31 +101,21 @@ nnoremap k gk
 nnoremap gj j
 nnoremap gk k
 
-" 自動コメントフォーマットをオフ
-set formatoptions-=ro
+" 各種設定ファイル編集ショートカット
+nnoremap <Space>1 :<C-u>tabedit $HOME/dotfiles/.vimrc<CR>            ".vimrc編集
+nnoremap <Space>2 :<C-u>tabedit $HOME/dotfiles/.vim/rc/dein.toml<CR> "dein.toml編集
+nnoremap <Space>3 :<C-u>tabedit $HOME/dotfiles/.zshrc<CR>            ".zshrc編集
 
-" Markdownプレビュー
-au BufRead,BufNewFile *.md set filetype=markdown
-let g:previm_open_cmd = 'open -a chrome'
 
-" This makes vim act like all other editors, buffers can
-" exist in the background without being in a window.
-" http://items.sjbach.com/319/configuring-vim-right
-set hidden
-syntax enable
-set background=dark
-colorscheme solarized
 
-"turn on syntax highlighting
-syntax on
 
-let mapleader=","
+inoremap <C-c> <ESC>             "Ctrl-Cでインサートモードを抜ける
 
-" ================ Turn Off Swap Files ==============
 
-set noswapfile
-set nobackup
-set nowb
+
+" コメントアウトトグル
+nmap <Space>c <Plug>(caw:i:toggle)
+vmap <Space>c <Plug>(caw:i:toggle)
 
 " ================ Persistent Undo ==================
 " Keep undo history across sessions, by storing in file.

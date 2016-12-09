@@ -153,3 +153,7 @@ repo = 'Yggdroot/indentLine'
 # ペースト時のインデントを無効
 [[plugins]]
 repo = 'ConradIrwin/vim-bracketed-paste'
+
+# ファイルタイプごとにコメントアウト切り替え
+[[plugins]]
+repo = 'tyru/caw.vim'
