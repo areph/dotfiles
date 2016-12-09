@@ -541,7 +541,7 @@ function! s:unite_keymap()
   augroup END
 
   ""スペースキーとyキーでヒストリ/ヤンクを表示
-  nnoremap <silent> [unite]y :<C-u>Unite<Space> yankround<CR>
+  nnoremap <silent> [unite]y :<C-u>Unite<Space> -buffer-name=register register<CR>
   "スペースキーとoキーでoutline
   nnoremap <silent> [unite]o :<C-u>Unite<Space> outline -prompt-direction="top"<CR>
   "unite-quickfixを呼び出し

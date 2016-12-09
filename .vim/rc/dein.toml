@@ -142,9 +142,6 @@ repo  = 'alpaca-tc/vim-endwise.git'
 on_i  = 1
 on_ft = ['ruby']
 
-[[plugins]]
-repo = 'LeafCage/yankround.vim'
-
 # マルチカーソル
 [[plugins]]
 repo = 'terryma/vim-multiple-cursors'
