@@ -48,7 +48,7 @@ set showmode                     "Show current mode down the bottom
 set gcr=a:blinkon0               "Disable cursor blink
 set visualbell                   "No sounds
 set autoread                     "Reload files changed outside vim
-set cursorline                   "Display current cursol line
+"set cursorline                   "Display current cursol line
 set clipboard=unnamed,autoselect "Clipboard vim to terminal
 set formatoptions-=ro            "Comment line format off
 
@@ -105,6 +105,9 @@ set expandtab
 " Display settings ---------------
 set list listchars=tab:\ \ ,trail:· "タブや空白を可視化
 set nowrap                          "行折り返ししない
+" インデントタブを可視化
+let g:indent_guides_enable_on_vim_startup = 1
+let g:indent_guides_guide_size = 1
 "全角スペースをハイライト表示
 function! ZenkakuSpace()
   highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
