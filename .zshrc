@@ -85,12 +85,23 @@ function tmux_automatically_attach_session()
 }
 tmux_automatically_attach_session
 
+# rangerのサブシェルの中でrangerがネストしない設定
 function ranger() {
     if [ -z "$RANGER_LEVEL" ]; then
-        /usr/bin/ranger $@
+        /usr/local/bin/ranger $@
     else
         exit
     fi
+}
+# rangerで`q`で抜けた時のディレクトリにcdするスクリプト
+function ranger-cd {
+    tempfile="$(mktemp -t tmp.XXXXXX)"
+    /usr/local/bin/ranger --choosedir="$tempfile" "${@:-$(pwd)}"
+    test -f "$tempfile" &&
+    if [ "$(cat -- "$tempfile")" != "$(echo -n `pwd`)" ]; then
+        cd -- "$(cat "$tempfile")"
+    fi
+    rm -f -- "$tempfile"
 }
 
 function agvim () {
