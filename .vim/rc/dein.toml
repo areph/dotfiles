@@ -162,6 +162,10 @@ repo = 'ConradIrwin/vim-bracketed-paste'
 [[plugins]]
 repo = 'tyru/caw.vim'
 
-# DIFFツール
+# 行DIFFツール
 [[plugins]]
 repo = 'AndrewRadev/linediff.vim'
+
+# Vimプラグイン作成用ライブラリ群
+[[plugins]]
+repo = 'vim-jp/vital.vim'

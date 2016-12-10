@@ -461,6 +461,21 @@ function! s:unite_keymap()
   vmap <Space> [unite]
   nmap <Space> [unite]
 
+  " プロジェクトのディレクトリ取得
+  function! GetProjectDir() abort " {{{
+    let l:buffer_dir = expand('%:p:h')
+    let l:project_dir = vital#of('vital').import('Prelude').path2project_directory(l:buffer_dir, 1)
+    if empty(l:project_dir) && exists('g:project_dir_pattern')
+      let l:project_dir = matchstr(l:buffer_dir, g:project_dir_pattern)
+    endif
+
+    if empty(l:project_dir)
+      return l:buffer_dir
+    else
+      return l:project_dir
+    endif
+  endfunction " }}}
+
   augroup unite_jump
     autocmd!
     autocmd BufEnter *
@@ -481,7 +496,18 @@ function! s:unite_keymap()
   "bキーでバッファを表示
   nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
   "pキーでプロジェクト内を表示
-  nnoremap <silent> [unite]p :<C-u>Unite file_rec/async:!<CR>
+  nnoremap [unite]p :<C-u>call <SID>unite_file_project()<CR>
+  function! s:unite_file_project()
+    let l:opts = (a:0 ? join(a:000, ' ') : '')
+    let l:project_dir = GetProjectDir()
+
+    if isdirectory(l:project_dir.'/.git')
+      execute 'lcd '.l:project_dir
+      execute 'Unite '.opts.' file_rec/git:--cached:--others:--exclude-standard'
+    else
+      execute 'Unite '.opts.' file_rec/async:'.l:project_dir
+    endif
+  endfunction
 
   "yキーでヒストリ/ヤンクを表示
   nnoremap <silent> [unite]y :<C-u>Unite<Space> -buffer-name=register register<CR>
@@ -497,9 +523,10 @@ function! s:unite_keymap()
   nnoremap <silent> [unite]G  :<C-u>UniteWithProjectDir grep:. -buffer-name=search-buffer <CR>
   " カーソル位置の単語をgrep検索
   nnoremap <silent> [unite]cG :<C-u>UniteWithProjectDir grep:. -buffer-name=search-buffer <CR> <C-R><C-W>
-  " git-grep
-  nnoremap <silent> [unite]g  :<C-u>Unite grep/git:. -buffer-name=search-buffer <CR>
-  nnoremap <silent> [unite]cg :<C-u>Unite grep/git:. -buffer-name=search-buffer <CR> <C-r><C-W>
+  " git-grep検索
+  nnoremap <silent> [unite]g  :<C-u>Unite grep/git:/:--untracked -buffer-name=search-buffer<CR>
+  " カーソル位置の単語をgit-grep検索
+  nnoremap <silent> [unite]cg :<C-u>Unite grep/git:/:--untracked -buffer-name=search-buffer<CR><C-R><C-W>
 
   " grep検索結果の再呼出
   nnoremap <silent> [unite]r  :<C-u>UniteResume search-buffer <CR>
@@ -509,7 +536,7 @@ function! s:unite_keymap()
   nnoremap <silent> [unite]<CR> :<C-u>Unite file_rec/git -buffer-name=search-buffer <CR>
 
   " Unite menu shortcut
-  nnoremap <silent> l :Unite menu:shortcut<CR>
+  nnoremap <silent> [unite]ll :Unite menu:shortcut<CR>
 
   " unite-rails
   noremap <silent> [unite]ec :<C-u>Unite rails/controller<CR>
@@ -528,6 +555,12 @@ function! s:unite_keymap()
   noremap <silent> [unite]ti :<C-u>Unite giti<CR>
   noremap <silent> [unite]ts :<C-u>Unite giti/status<CR>
 
+  " unite grep に ag(The Silver Searcher) を使う
+  if executable('ag')
+    let g:unite_source_grep_command = 'ag'
+    let g:unite_source_grep_default_opts = '--nogroup --nocolor --column'
+    let g:unite_source_grep_recursive_opt = ''
+  endif
 endfunction
 
 "unite.vimを開いている間のキーマッピング
