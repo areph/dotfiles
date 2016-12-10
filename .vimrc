@@ -411,6 +411,49 @@ augroup unite_global_keymap
   autocmd BufEnter * :call s:unite_keymap()
 augroup END
 
+" unite-menu shortcut {{{
+if !exists("g:unite_source_menu_menus")
+    let g:unite_source_menu_menus = {}
+endif
+
+let g:unite_source_menu_menus.shortcut = {
+      \   "description" : "shortcut"
+      \}
+
+let g:unite_source_menu_menus.shortcut.candidates = [
+      \   [ "zshrc"  , "~/.zshrc"],
+      \   [ "vimrc"  , "~/.vimrc"],
+      \   [ "dein.toml"  , "~/dotfiles/.vim/rc/dein.toml"],
+      \   [ "Github", "OpenBrowser https://github.com/" ],
+      \   [ "Gist", "OpenBrowser https://gist.github.com/" ],
+      \   [ "Blog Edit", "OpenBrowser http://40balmung.hatenablog.com/#edit" ],
+      \]
+
+function! g:unite_source_menu_menus.shortcut.map(key, value)
+  let [word, value] = a:value
+
+  if isdirectory(value)
+    return {
+          \               "word" : "[directory] ".word,
+          \               "kind" : "directory",
+          \               "action__directory" : value
+          \           }
+  elseif !empty(glob(value))
+    return {
+          \               "word" : "[file] ".word,
+          \               "kind" : "file",
+          \               "default_action" : "tabdrop",
+          \               "action__path" : value,
+          \           }
+  else
+    return {
+          \               "word" : "[command] ".word,
+          \               "kind" : "command",
+          \               "action__command" : value
+          \           }
+  endif
+endfunction
+
 " Uniteトリガーをスペースキーに設定
 function! s:unite_keymap()
   nnoremap [unite] <Nop>
@@ -465,6 +508,9 @@ function! s:unite_keymap()
 
   nnoremap <silent> [unite]<CR> :<C-u>Unite file_rec/git -buffer-name=search-buffer <CR>
 
+  " Unite menu shortcut
+  nnoremap <silent> l :Unite menu:shortcut<CR>
+
   " unite-rails
   noremap <silent> [unite]ec :<C-u>Unite rails/controller<CR>
   noremap <silent> [unite]em :<C-u>Unite rails/model<CR>
@@ -503,15 +549,9 @@ function! s:unite_my_settings()
   "ctrl+kでauto-previewモードにする
   nmap <buffer> <C-k> <Plug>(unite_toggle_auto_preview)
   imap <buffer> <C-k> <Plug>(unite_toggle_auto_preview)
-  "ctrl+sで縦に分割して開く
-  nnoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
-  inoremap <silent> <buffer> <expr> <C-s> unite#do_action('split')
   "ctrl+vでに分割して開く
-  nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-  inoremap <silent> <buffer> <expr> <C-v> unite#do_action('vsplit')
-  "ctrl+oでその場所に開く
-  nnoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
-  inoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
+  nnoremap <silent> <buffer> <expr> <C-v> unite#do_action('right')
+  inoremap <silent> <buffer> <expr> <C-v> unite#do_action('right')
 endfunction
 
 " ================ Neocomplete ====================
