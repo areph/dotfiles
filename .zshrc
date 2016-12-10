@@ -8,6 +8,8 @@
 export PATH=/usr/local/bin:$PATH
 export GOPATH=$HOME
 export PATH=$PATH:$GOPATH/bin
+export PATH=$HOME/.nodebrew/current/bin:$PATH
+export PATH=$PATH:./node_modules/.bin
 
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
