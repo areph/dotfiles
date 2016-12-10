@@ -161,3 +161,7 @@ repo = 'ConradIrwin/vim-bracketed-paste'
 # ファイルタイプごとにコメントアウト切り替え
 [[plugins]]
 repo = 'tyru/caw.vim'
+
+# DIFFツール
+[[plugins]]
+repo = 'AndrewRadev/linediff.vim'
