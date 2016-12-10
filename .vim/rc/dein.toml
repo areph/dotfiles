@@ -2,9 +2,18 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
 
-# ファイル操作
+# Unite I/F
 [[plugins]]
 repo = 'Shougo/unite.vim'
+
+# Unite - ソースコードのアウトライン
+[[plugins]]
+repo = 'Shougo/unite-outline'
+
+# Unite - Rails関連ディレクトリをuniteで操作
+[[plugins]]
+repo = 'basyura/unite-rails'
+on_ft = ['ruby']
 
 # snippets
 [[plugins]]
@@ -75,11 +84,6 @@ repo = 'honza/vim-snippets'
 [[plugins]]
 repo = 'cohama/lexima.vim'
 on_i = 1
-
-# Rails関連ディレクトリをuniteで操作
-[[plugins]]
-repo = 'basyura/unite-rails'
-on_ft = ['ruby']
 
 # :Aと:Rで該当するRailsファイルに移動する
 [[plugins]]
