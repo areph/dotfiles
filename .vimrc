@@ -1,4 +1,4 @@
-" dein settings {{{
+" dein settings'
 " dein自体の自動インストール
 let s:cache_home = empty($XDG_CACHE_HOME) ? expand('~/.cache') : $XDG_CACHE_HOME
 let s:dein_dir = s:cache_home . '/dein'
@@ -7,6 +7,7 @@ if !isdirectory(s:dein_repo_dir)
   call system('git clone https://github.com/Shougo/dein.vim ' . shellescape(s:dein_repo_dir))
 endif
 let &runtimepath = s:dein_repo_dir .",". &runtimepath
+
 " プラグイン読み込み＆キャッシュ作成
 let s:toml_file = fnamemodify(expand('<sfile>'), ':h').'/.vim/rc/dein.toml'
 if dein#load_state(s:dein_dir)
@@ -20,7 +21,6 @@ endif
 if has('vim_starting') && dein#check_install()
   call dein#install()
 endif
-" }}}
 
 " デフォルトプラグインを読み込まない
 let g:loaded_gzip              = 1
@@ -39,137 +39,42 @@ let g:loaded_netrwPlugin       = 1
 let g:loaded_netrwSettings     = 1
 let g:loaded_netrwFileHandlers = 1
 
-
 " ================ General Config ====================
-set number                      "Line numbers are good
-set backspace=indent,eol,start  "Allow backspace in insert mode
-set history=1000                "Store lots of :cmdline history
-set showcmd                     "Show incomplete cmds down the bottom
-set showmode                    "Show current mode down the bottom
-set gcr=a:blinkon0              "Disable cursor blink
-set visualbell                  "No sounds
-set autoread                    "Reload files changed outside vim
-set cursorline
-set clipboard=unnamed,autoselect
+set number                       "Line numbers are good
+set backspace=indent,eol,start   "Allow backspace in insert mode
+set history=1000                 "Store lots of :cmdline history
+set showcmd                      "Show incomplete cmds down the bottom
+set showmode                     "Show current mode down the bottom
+set gcr=a:blinkon0               "Disable cursor blink
+set visualbell                   "No sounds
+set autoread                     "Reload files changed outside vim
+set cursorline                   "Display current cursol line
+set clipboard=unnamed,autoselect "Clipboard vim to terminal
+set formatoptions-=ro            "Comment line format off
 
 " Charset, Line ending -----------------
 set encoding=utf-8
 scriptencoding utf-8
 
 " Cursol ---------------
-set backspace=indent,eol,start " Backspaceキーの影響範囲に制限を設けない
-"set whichwrap=b,s,h,l,<,>,[,]  " 行頭行末の左右移動で行をまたぐ
-set lazyredraw
+set backspace=indent,eol,start   "Backspaceキーの影響範囲に制限を設けない
+"set whichwrap=b,s,h,l,<,>,[,]   "行頭行末の左右移動で行をまたぐ
+set lazyredraw                   "マクロなどの描写を行わない
 
 " Files ---------------
-set confirm "保存されていないファイルがあるときは終了前に保存確認
-set hidden "保存されていないファイルがあるときでも別のファイルを開くことが出来る
-set nobackup "ファイル保存時にバックアップファイルを作らない
-set noswapfile "ファイル編集中にスワップファイルを作らない
-set autoread "外部でファイルに変更がされた場合は読みなおす
+set confirm                      "保存されていないファイルがあるときは終了前に保存確認
+set hidden                       "保存されていないファイルがあるときでも別のファイルを開くことが出来る
+set nobackup                     "ファイル保存時にバックアップファイルを作らない
+set noswapfile                   "ファイル編集中にスワップファイルを作らない
+set autoread                     "外部でファイルに変更がされた場合は読みなおす
+set nowb                         "バックアップを保持しない
 
-"ビープの設定
-"ビープ音すべてを無効にする
-set visualbell t_vb=
-set noerrorbells "エラーメッセージの表示時にビープを鳴らさない
+" Beep ---------------
+set visualbell t_vb=             "ビープ音すべてを無効にする
+set noerrorbells                 "エラーメッセージの表示時にビープを鳴らさない
 
-"コマンドライン設定
-" コマンドラインモードでTABキーによるファイル名補完を有効にする
-set wildmenu wildmode=list:longest,full
-" コマンドラインの履歴を1000件保存する
-set history=1000
-
-" インサートモードから抜けると自動的にIMEをオフにする
-set iminsert=0
-set imsearch=-1
-""Ctrl-Cでインサートモードを抜ける
-inoremap <C-c> <ESC>
-
-" ノーマルモード時だけ ; と : を入れ替える
-nnoremap ; :
-nnoremap : ;
-
-".vimrcの編集用
-nnoremap <Space>. :<C-u>tabedit $HOME/dotfiles/.vimrc<CR>
-
-".vimプラグイン管理ファイルの編集用
-nnoremap <Space>, :<C-u>tabedit $HOME/dotfiles/.vim/rc/dein.toml<CR>
-
-" 行移動を改行コードを意識した移動へ
-nnoremap j gj
-nnoremap k gk
-nnoremap gj j
-nnoremap gk k
-
-" 各種設定ファイル編集ショートカット
-nnoremap <Space>1 :<C-u>tabedit $HOME/dotfiles/.vimrc<CR>            ".vimrc編集
-nnoremap <Space>2 :<C-u>tabedit $HOME/dotfiles/.vim/rc/dein.toml<CR> "dein.toml編集
-nnoremap <Space>3 :<C-u>tabedit $HOME/dotfiles/.zshrc<CR>            ".zshrc編集
-
-
-
-
-inoremap <C-c> <ESC>             "Ctrl-Cでインサートモードを抜ける
-
-
-
-" コメントアウトトグル
-nmap <Space>c <Plug>(caw:i:toggle)
-vmap <Space>c <Plug>(caw:i:toggle)
-
-" ================ Persistent Undo ==================
-" Keep undo history across sessions, by storing in file.
-" Only works all the time.
-if has('persistent_undo') && !isdirectory(expand('~').'/.vim/backups')
-  silent !mkdir ~/.vim/backups > /dev/null 2>&1
-  set undodir=~/.vim/backups
-  set undofile
-endif
-
-" ================ Indentation ======================
-
-set autoindent
-set smartindent
-set smarttab
-set shiftwidth=2
-set softtabstop=2
-set tabstop=2
-set expandtab
-
-" Auto indent pasted text
-nnoremap p p=`]<C-o>
-nnoremap P P=`]<C-o>
-
-filetype plugin on
-filetype indent on
-
-" Display tabs and trailing spaces visually
-set list listchars=tab:\ \ ,trail:·
-
-set nowrap       "Don't wrap lines
-set linebreak    "Wrap lines at convenient points
-
-" ================ Folds ============================
-
-"set foldmethod=indent   "fold based on indent
-
-set foldenable
-set foldmethod=syntax
-
-autocmd InsertEnter * if !exists('w:last_fdm')
-            \| let w:last_fdm=&foldmethod
-            \| setlocal foldmethod=manual
-            \| endif
-autocmd InsertLeave,WinLeave * if exists('w:last_fdm')
-            \| let &l:foldmethod=w:last_fdm
-            \| unlet w:last_fdm
-            \| endif
-set foldnestmax=3       "deepest fold is 3 levels
-set nofoldenable        "dont fold by default
-
-" ================ Completion =======================
-
-set wildmode=list:longest
+" Command line ---------------
+set wildmenu wildmode=list:longest,full "コマンドラインモードでTABキーによるファイル名補完を有効にする
 set wildmenu                "enable ctrl-n and ctrl-p to scroll thru matches
 set wildignore=*.o,*.obj,*~ "stuff to ignore when tab completing
 set wildignore+=*vim/backups*
@@ -181,21 +86,74 @@ set wildignore+=*.gem
 set wildignore+=log/**
 set wildignore+=tmp/**
 set wildignore+=*.png,*.jpg,*.gif
+" 保存時に最後尾の空白を削除
+autocmd BufWritePre * :%s/\s\+$//ge
 
-"
-" ================ Scrolling ========================
+" ColorScheme ---------------
+colorscheme solarized
+set background=dark
 
-set scrolloff=8         "Start scrolling when we're 8 lines away from margins
-set sidescrolloff=15
-set sidescroll=1
+" Indentation ---------------
+set autoindent
+set smartindent
+set smarttab
+set shiftwidth=2
+set softtabstop=2
+set tabstop=2
+set expandtab
 
-" ================ Search ===========================
+" Display settings ---------------
+set list listchars=tab:\ \ ,trail:· "タブや空白を可視化
+set nowrap                          "行折り返ししない
+"全角スペースをハイライト表示
+function! ZenkakuSpace()
+  highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
+endfunction
+if has('syntax')
+  augroup ZenkakuSpace
+    autocmd!
+    autocmd ColorScheme       * call ZenkakuSpace()
+    autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
+  augroup END
+  call ZenkakuSpace()
+endif
 
-set incsearch       " Find the next match as we type the search
-set hlsearch        " Highlight searches by default
-set ignorecase      " Ignore case when searching...
-set smartcase       " ...unless we type a capital
-set gdefault
+" Scrolling ---------------
+set scrolloff=8                     "縦スクロールした際の視界確保行数
+set sidescrolloff=16                "横スクロールした際の視界確保行数
+set sidescroll=1                    "横スクロール数は1ずつ
+
+" Search settings ---------------
+set incsearch                       "検索ワードをインクリメンタルサーチ
+set hlsearch                        "検索ワードをハイライト
+set ignorecase                      "大文字小文字を区別しない
+set smartcase                       "大文字で検索した場合はignorecaseにしない
+set gdefault                        "置換の際にg指定しなくても繰り返し置換する
+
+" コマンド表示行を2行へ拡張
+set cmdheight=2
+
+" Leader setting ---------------
+let mapleader=","
+
+" Key Binding ---------------
+" 英字配列用にノーマルモードでは;:入れ替え
+nnoremap ; :
+nnoremap : ;
+
+" コメントアウトトグル
+nmap <Space>c <Plug>(caw:i:toggle)
+vmap <Space>c <Plug>(caw:i:toggle)
+
+" ペースト時にインデントさせない
+nnoremap p p=`]<C-o>
+nnoremap P P=`]<C-o>
+
+inoremap <C-c> <ESC>             "Ctrl-Cでインサートモードを抜ける
+
+" filytype各種ON
+filetype plugin on
+filetype indent on
 
 " 検索後にジャンプした際に検索単語を画面中央に持ってくる
 nnoremap n nzz
@@ -205,7 +163,7 @@ nnoremap # #zz
 nnoremap g* g*zz
 nnoremap g# g#zz
 
-"インサートモードで bash 風キーマップ
+" インサートモードで bash 風キーマップ
 inoremap <C-a> <C-o>^
 inoremap <C-e> <C-o>$
 inoremap <C-b> <Left>
@@ -218,14 +176,18 @@ inoremap <C-k> <C-o>D<Right>
 inoremap <C-u> <C-o>d^
 inoremap <C-w> <C-o>db
 
-" 波線で表示する場合は、以下の設定を行う
-" エラーを赤字の波線で
-"execute "highlight qf_error_ucurl gui=undercurl guisp=Red"
-"let g:hier_highlight_group_qf  = "qf_error_ucurl"
-"" 警告を青字の波線で
-"execute "highlight qf_warning_ucurl gui=undercurl guisp=Blue"
-"let g:hier_highlight_group_qfw = "qf_warning_ucurl"
+" vを押下するごとに選択範囲を拡張
+vmap v <Plug>(expand_region_expand)
+vmap <C-v> <Plug>(expand_region_shrink)
 
+" ウィンドウサイズ変更
+nnoremap <S-Left>  <C-w><<CR>
+nnoremap <S-Right> <C-w>><CR>
+nnoremap <S-Up>    <C-w>-<CR>
+nnoremap <S-Down>  <C-w>+<CR>
+
+" Syntax highlight ---------------
+syntax enable                    "シンタクスハイライトを有効化
 augroup add_syntax_hilight
   autocmd!
   "シンタックスハイライトの追加
@@ -236,16 +198,8 @@ augroup add_syntax_hilight
   autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set ft=markdown
 augroup END
 
-" Other
-set rtp+=~/.fzf
 
-" reset augroup
-augroup MyAutoCmd
-  autocmd!
-augroup END
-
-
-"" {{{lightline
+" ================ lightline ====================
 let g:lightline = {
       \ 'colorscheme': 'wombat',
       \ 'active': {
@@ -259,7 +213,6 @@ let g:lightline = {
       \   'filetype': 'LightLineFiletype',
       \   'fileencoding': 'LightLineFileencoding',
       \   'mode': 'LightLineMode',
-      \   'ctrlpmark': 'CtrlPMark',
       \ },
       \ 'component_expand': {
       \   'syntaxcheck': 'qfstatusline#Update',
@@ -328,33 +281,6 @@ function! LightLineMode()
         \ winwidth(0) > 60 ? lightline#mode() : ''
 endfunction
 
-function! CtrlPMark()
-  if expand('%:t') =~ 'ControlP' && has_key(g:lightline, 'ctrlp_item')
-    call lightline#link('iR'[g:lightline.ctrlp_regex])
-    return lightline#concatenate([g:lightline.ctrlp_prev, g:lightline.ctrlp_item
-          \ , g:lightline.ctrlp_next], 0)
-  else
-    return ''
-  endif
-endfunction
-
-let g:ctrlp_status_func = {
-  \ 'main': 'CtrlPStatusFunc_1',
-  \ 'prog': 'CtrlPStatusFunc_2',
-  \ }
-
-function! CtrlPStatusFunc_1(focus, byfname, regex, prev, item, next, marked)
-  let g:lightline.ctrlp_regex = a:regex
-  let g:lightline.ctrlp_prev = a:prev
-  let g:lightline.ctrlp_item = a:item
-  let g:lightline.ctrlp_next = a:next
-  return lightline#statusline(0)
-endfunction
-
-function! CtrlPStatusFunc_2(str)
-  return lightline#statusline(0)
-endfunction
-
 let g:tagbar_status_func = 'TagbarStatusFunc'
 
 function! TagbarStatusFunc(current, sort, fname, ...) abort
@@ -376,14 +302,9 @@ let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 set laststatus=2
 set t_Co=256
-"}}}
 
 
-vmap v <Plug>(expand_region_expand)
-vmap <C-v> <Plug>(expand_region_shrink)
-
-"quickrun
-
+" ================ Quickrun & Watchdogs ====================
 augroup ansiesc
   autocmd!
   autocmd FileType quickrun AnsiEsc
@@ -392,14 +313,6 @@ augroup END
 " シンタックスチェックは<Leader>+wで行う
 nnoremap <Leader>w :<C-u>WatchdogsRun<CR>
 
-" let g:watchdogs_check_BufWritePost_enables = {
-"       \   'sh':         1,
-"       \   'sass':       1,
-"       \   'scss':       1
-"       \}
-"       " \   "javascript": 1,
-"       " \   "ruby": 1,
-
 let g:watchdogs_check_CursorHold_enable = 0
 let g:watchdogs_check_BufWritePost_enable = 0
 
@@ -407,7 +320,7 @@ let g:watchdogs_check_BufWritePost_enable = 0
 " quickrun.vim が実行していない場合には <C-c> を呼び出す
 nnoremap <expr><silent> <C-c> quickrun#is_running() ? quickrun#sweep_sessions() : "\<C-c>"
 
-"watchdogs_checker
+" watchdogs_checker
 let g:quickrun_config = {
       \   '_' : {
       \       'hook/close_quickfix/enable_exit' : 1,
@@ -476,12 +389,6 @@ let g:quickrun_config['json/watchdogs_checker'] = {
 " execute
 let g:quickrun_config['html'] = { 'command' : 'open', 'exec' : '%c %s', 'outputter': 'browser' }
 
-" " If syntax error, cursor is moved at line setting sign.
-"let g:qfsigns#AutoJump = 1
-
-" If syntax error, view split and cursor is moved at line setting sign.
-"let g:qfsigns#AutoJump = 2
-
 let g:Qfstatusline#UpdateCmd = function('lightline#update')
 " watchdogs.vim の設定を追加
 call watchdogs#setup(g:quickrun_config)
@@ -490,46 +397,26 @@ let g:unite_force_overwrite_statusline    = 0
 let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 
-"" {{{Unite
-" " インサートモードで開始
+" ================ Unite ====================
+" インサートモードで開始
 let g:unite_enable_start_insert=1
 " 最近のファイルの個数制限
 let g:unite_source_file_mru_limit           = 1000
 let g:unite_source_file_mru_filename_format = ''
 " file_recのキャッシュ
 let g:unite_source_rec_max_cache_files = 50000
-" let g:unite_source_rec_min_cache_files = 100
 
-
-let g:unite_source_menu_menus = get(g:,'unite_source_menu_menus',{})
-let g:unite_source_menu_menus.git = {
-    \ 'description' : '            gestionar repositorios git
-        \                            ⌘ [espacio]g',
-    \}
 augroup unite_global_keymap
   autocmd!
   autocmd BufEnter * :call s:unite_keymap()
 augroup END
-"prefix keyの設定
+
+" Uniteトリガーをスペースキーに設定
 function! s:unite_keymap()
   nnoremap [unite] <Nop>
   vmap <Space> <Nop>
   vmap <Space> [unite]
   nmap <Space> [unite]
-
-  nnoremap <silent> [unite]i :<C-u>Unite<Space>
-  "スペースキーとaキーでカレントディレクトリを表示
-  nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
-  "スペースキーとmキーでプロジェクト内で最近開いたファイル一覧を表示
-  nnoremap <silent> [unite]m :<C-u>UniteWithProjectDir<Space>file_mru<CR>
-  "スペースキーとMキーで最近開いたファイル一覧を表示
-  nnoremap <silent> [unite]M :<C-u>Unite<Space>file_mru<CR>
-  "スペースキーとdキーで最近開いたディレクトリを表示
-  nnoremap <silent> [unite]d :<C-u>Unite<Space> directory_mru<CR>
-  "スペースキーとbキーでバッファを表示
-  nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
-  "スペースキーとpキーでプロジェクト内を表示
-  nnoremap <silent> [unite]p :<C-u>Unite file_rec/async:!<CR>
 
   augroup unite_jump
     autocmd!
@@ -539,9 +426,23 @@ function! s:unite_keymap()
           \|  endif
   augroup END
 
-  ""スペースキーとyキーでヒストリ/ヤンクを表示
+  nnoremap <silent> [unite]i :<C-u>Unite<Space>
+  "aキーでカレントディレクトリを表示
+  nnoremap <silent> [unite]a :<C-u>UniteWithBufferDir -buffer-name=files file<CR>
+  "mキーでプロジェクト内で最近開いたファイル一覧を表示
+  nnoremap <silent> [unite]m :<C-u>UniteWithProjectDir<Space>file_mru<CR>
+  "Mキーで最近開いたファイル一覧を表示
+  nnoremap <silent> [unite]M :<C-u>Unite<Space>file_mru<CR>
+  "dキーで最近開いたディレクトリを表示
+  nnoremap <silent> [unite]d :<C-u>Unite<Space> directory_mru<CR>
+  "bキーでバッファを表示
+  nnoremap <silent> [unite]b :<C-u>Unite<Space>buffer<CR>
+  "pキーでプロジェクト内を表示
+  nnoremap <silent> [unite]p :<C-u>Unite file_rec/async:!<CR>
+
+  "yキーでヒストリ/ヤンクを表示
   nnoremap <silent> [unite]y :<C-u>Unite<Space> -buffer-name=register register<CR>
-  "スペースキーとoキーでoutline
+  "oキーでoutline
   nnoremap <silent> [unite]o :<C-u>Unite<Space> outline -prompt-direction="top"<CR>
   "unite-quickfixを呼び出し
   " multi-line を切る
@@ -549,8 +450,6 @@ function! s:unite_keymap()
   call unite#custom_source('quickfix', 'converters', 'converter_quickfix_highlight')
   call unite#custom_source('location_list', 'converters', 'converter_quickfix_highlight')
   nnoremap <silent> [unite]q :<C-u>Unite<Space> -no-quit -wrap quickfix<CR>
-  ""スペースキーとgキーでgrep
-  " vnoremap <silent> [unite]/g :Unite grep::-iHRn:<C-R>=escape(@", '\\.*$^[]')<CR><CR>
   " grep検索
   nnoremap <silent> [unite]G  :<C-u>UniteWithProjectDir grep:. -buffer-name=search-buffer <CR>
   " カーソル位置の単語をgrep検索
@@ -561,12 +460,12 @@ function! s:unite_keymap()
 
   " grep検索結果の再呼出
   nnoremap <silent> [unite]r  :<C-u>UniteResume search-buffer <CR>
-  " " bookmark
+  " bookmark
   nnoremap <silent> [unite]B :<C-u>Unite bookmark<CR>
 
   nnoremap <silent> [unite]<CR> :<C-u>Unite file_rec/git -buffer-name=search-buffer <CR>
 
-  ""unite-rails
+  " unite-rails
   noremap <silent> [unite]ec :<C-u>Unite rails/controller<CR>
   noremap <silent> [unite]em :<C-u>Unite rails/model<CR>
   noremap <silent> [unite]ev :<C-u>Unite rails/view<CR>
@@ -579,11 +478,12 @@ function! s:unite_keymap()
   noremap <silent> [unite]el :<C-u>Unite rails/log<CR>
   noremap <silent> [unite]ed :<C-u>Unite rails/db<CR>
 
-  "unite-giti
+  " unite-giti
   noremap <silent> [unite]ti :<C-u>Unite giti<CR>
   noremap <silent> [unite]ts :<C-u>Unite giti/status<CR>
 
 endfunction
+
 "unite.vimを開いている間のキーマッピング
 augroup unite_local_keymap
   autocmd!
@@ -612,51 +512,26 @@ function! s:unite_my_settings()
   "ctrl+oでその場所に開く
   nnoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
   inoremap <silent> <buffer> <expr> <C-o> unite#do_action('open')
-
 endfunction
-"}}}
 
-" neocomplete {{{
+" ================ Neocomplete ====================
 let g:neocomplete#enable_at_startup               = 1
-"let g:neocomplete#auto_completion_start_length    = 2
 let g:neocomplete#enable_ignore_case              = 1
-" let g:neocomplete#enable_smart_case               = 1
 let g:neocomplete#enable_cursor_hold_i            = 1
-" let g:neocomplete#enable_camel_case               = 1
-" let g:neocomplete#enable_fuzzy_completion         = 1
 let g:neocomplete#use_vimproc                     = 1
 let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
-
-" rsense
-let g:neocomplete#force_omni_input_patterns      = {}
-let g:neocomplete#force_omni_input_patterns = {
-      \   'ruby' : '[^. *\t]\.\|\h\w*::',
-      \   'rails' : '[^. *\t]\.\|\h\w*::',
-      \   'rspec' : '[^. *\t]\.\|\h\w*::',
-      \   'eruby' : '[^. *\t]\.\|\h\w*::',
-      \   'ruby.rails' : '[^. *\t]\.\|\h\w*::',
-      \   'ruby.rspec' : '[^. *\t]\.\|\h\w*::',
-      \   'eruby.html' : '[^. *\t]\.\|\h\w*::'
-      \}
-
-let g:rsenseUseOmniFunc = 1
 
 let g:neocomplete#sources#dictionary#dictionaries = {
       \   'ruby': $HOME . '/.cache/dein/repos/github.com/pocke/dicts/ruby.dict',
       \ }
 
-" "NeoSnippet.vim
+" ================ NeoSnippet ====================
 let g:neosnippet#enable_snipmate_compatibility = 1
 " remove ${x} marker when switching normal mode
 let g:neosnippet#enable_auto_clear_markers = 1
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets/, ~/.cache/dein/repos/github.com/honza/vim-snippets/snippets/'
-
-" "NeoSnippet.vim
-let g:neosnippet#enable_snipmate_compatibility = 1
-" remove ${x} marker when switching normal mode
-let g:neosnippet#enable_auto_clear_markers = 1
-" Plugin key-mappings.
+" key-mappings.
 imap <Nul> <C-Space>
 imap <C-Space>     <Plug>(neosnippet_expand_or_jump)
 smap <C-Space>     <Plug>(neosnippet_expand_or_jump)
@@ -671,11 +546,6 @@ if has('conceal')
   set conceallevel=2 concealcursor=i
 endif
 
-" rails
-"   autocmd!
-"   autocmd BufEnter * if exists("b:rails_root") | NeoCompleteSetFileType ruby.rails | endif
-"   autocmd BufEnter * if (expand("%") =~ "_spec\.rb$") || (expand("%") =~ "^spec.*\.rb$") | NeoCompleteSetFileType ruby.rspec | endif
-" augroup END
 let g:neosnippet#snippets_directory = $HOME . '/.vim/snippets'
 
 " enable ruby & rails snippet only rails file
@@ -697,14 +567,13 @@ augroup rails_snippet
   au BufEnter * call s:RSpecSnippet()
 augroup END
 
-" open-browser.vim
+" ================ Open browser ====================
 let g:netrw_nogx = 1 " disable netrw's gx mapping.
+" カーソル位置にある単語をGoogle検索
 nmap gx <Plug>(openbrowser-smart-search)
 vmap gx <Plug>(openbrowser-smart-search)
 
-set cmdheight=2
-
-" ranger
+" ================ Ranger ====================
 function! RangeChooser()
   let temp = tempname()
   " The option "--choosefiles" was added in ranger 1.5.1. Use the next line
@@ -737,21 +606,7 @@ endfunction
 command! -bar RangerChooser call RangeChooser()
 nnoremap <leader>r :<C-U>RangerChooser<CR>
 
-
-"全角スペースをハイライト表示
-function! ZenkakuSpace()
-    highlight ZenkakuSpace cterm=reverse ctermfg=DarkMagenta gui=reverse guifg=DarkMagenta
-endfunction
-
-if has('syntax')
-    augroup ZenkakuSpace
-        autocmd!
-        autocmd ColorScheme       * call ZenkakuSpace()
-        autocmd VimEnter,WinEnter * match ZenkakuSpace /　/
-    augroup END
-    call ZenkakuSpace()
-endif
-
-autocmd BufWritePre * :%s/\s\+$//ge
-
+" ================ Ctags  ====================
+" ctagsを別ウィンドウで開く
 nnoremap <C-k> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
+
