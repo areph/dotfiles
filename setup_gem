@@ -1,0 +1,6 @@
+gem i libv8-3.16.14.11-x86_64-darwin-15.gem
+gem i rails
+gem i mysql2
+gem i bundler
+gem i rmagick
+gem i rubocop
