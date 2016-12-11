@@ -144,9 +144,13 @@ let mapleader=","
 nnoremap ; :
 nnoremap : ;
 
+" マクロ誤操作を防ぐため入れ替え
+nnoremap Q q
+nnoremap q <Nop>
+
 " コメントアウトトグル
-nmap <Space>c <Plug>(caw:i:toggle)
-vmap <Space>c <Plug>(caw:i:toggle)
+nmap <Leader>c <Plug>(caw:i:toggle)
+vmap <Leader>c <Plug>(caw:i:toggle)
 
 " ペースト時にインデントさせない
 nnoremap p p=`]<C-o>
