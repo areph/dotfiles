@@ -167,3 +167,8 @@ repo = 'thinca/vim-scouter'
 [[plugins]]
 repo = 'nathanaelkane/vim-indent-guides'
 
+# Yank&Register拡張
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+
+

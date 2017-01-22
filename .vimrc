@@ -517,7 +517,7 @@ function! s:unite_keymap()
   endfunction
 
   "yキーでヒストリ/ヤンクを表示
-  nnoremap <silent> [unite]y :<C-u>Unite<Space> -buffer-name=register register<CR>
+  nnoremap <silent> [unite]y :<C-u>Unite history/yank<CR>
   "oキーでoutline
   nnoremap <silent> [unite]o :<C-u>Unite<Space> outline -prompt-direction="top"<CR>
   "unite-quickfixを呼び出し
