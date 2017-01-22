@@ -193,6 +193,12 @@ nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 
+" カーソル移動をShiftと組み合わせたキーバインドで楽に
+noremap <S-h>   ^
+noremap <S-j>   }
+noremap <S-k>   {
+noremap <S-l>   $
+
 " Syntax highlight ---------------
 syntax enable                    "シンタクスハイライトを有効化
 augroup add_syntax_hilight
