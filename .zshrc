@@ -134,9 +134,6 @@ export EDITOR=vim
 
 setopt extended_history
 
-alias rubo='bundle exec rubocop -R -S -a -D'
-alias r='rails'
-alias g='git'
 alias b='bundle exec'
 alias brb='b rake db:rollback'
 alias brm='b rake db:migrate'
