@@ -141,7 +141,6 @@ alias brs='b rake db:migrate:reset'
 alias ag='ag -S --stats --pager "less -F"'
 
 cd(){
-
   # 引数ありのときはそのままビルトインをコール
   if [ $# -gt 0 ]; then
     builtin cd "$@"
@@ -157,10 +156,9 @@ cd(){
 
   # それ以外はそのままビルトインをコール
   builtin cd
-
 }
 
-function peco-src () {
+function peco-ghq-src () {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
@@ -168,6 +166,18 @@ function peco-src () {
   fi
   zle clear-screen
 }
-zle -N peco-src
-bindkey '^[' peco-src
+zle -N peco-ghq-src
+bindkey '^[' peco-ghq-src
+
+function peco-ghq-hub () {
+  local selected_dir=$(ghq list | peco --query "$LBUFFER" | cut -d "/" -f 2,3)
+  if [ -n "$selected_dir" ]; then
+    BUFFER="hub browse ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N peco-ghq-hub
+bindkey '^]' peco-ghq-hub
+
 alias ctags="`brew --prefix`/bin/ctags"
