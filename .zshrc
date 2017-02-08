@@ -134,6 +134,8 @@ export EDITOR=vim
 
 setopt extended_history
 
+alias r='ranger'
+alias rc='ranger-cd'
 alias b='bundle exec'
 alias brb='b rake db:rollback'
 alias brm='b rake db:migrate'
