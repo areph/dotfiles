@@ -105,7 +105,12 @@ function ranger-cd {
 }
 
 function agvim () {
-  vim $(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
+  local selected=$(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
+
+  if [ -n "$selected" ]; then
+    local buf='vim '$selected
+    eval $buf
+  fi
 }
 
 export GOPATH="$HOME/.go"
