@@ -188,3 +188,16 @@ zle -N peco-ghq-hub
 bindkey '^]' peco-ghq-hub
 
 alias ctags="`brew --prefix`/bin/ctags"
+
+# vimとshを切り替える
+toggle-shell() {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N toggle-shell
+bindkey '^Z' toggle-shell
