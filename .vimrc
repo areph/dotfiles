@@ -263,11 +263,15 @@ let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
+nmap <silent> <C-p> <Plug>(ale_previous_wrap)
+nmap <silent> <C-i> <Plug>(ale_next_wrap)
+let g:airline_section_error = '%{exists("ALEGetStatusLine") ? ALEGetStatusLine() : ""}'
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
+
 " ================ lightline ====================
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'], ['lint'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
@@ -277,6 +281,7 @@ let g:lightline = {
       \   'filetype': 'LightLineFiletype',
       \   'fileencoding': 'LightLineFileencoding',
       \   'mode': 'LightLineMode',
+      \   'lint': 'Lint',
       \ },
       \ 'component_expand': {
       \   'syntaxcheck': 'qfstatusline#Update',
@@ -286,6 +291,10 @@ let g:lightline = {
       \ },
       \ 'subseparator': { 'left': '|', 'right': '|' }
       \ }
+
+function! Lint()
+  return exists('*ALEGetStatusLine') ? ALEGetStatusLine() : ''
+endfunction
 
 function! LightLineModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
