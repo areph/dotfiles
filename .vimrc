@@ -769,3 +769,5 @@ nnoremap <leader>r :<C-U>RangerChooser<CR>
 " ctagsを別ウィンドウで開く
 nnoremap <C-k> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 
+" Renameコマンド
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
