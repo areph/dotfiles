@@ -6,7 +6,7 @@
 #
 
 export PATH=/usr/local/bin:$PATH
-export GOPATH=$HOME
+export GOPATH=$HOME/gocode
 export PATH=$PATH:$GOPATH/bin
 export PATH=$HOME/.nodebrew/current/bin:$PATH
 export PATH=$PATH:./node_modules/.bin
