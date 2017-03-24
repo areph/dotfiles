@@ -671,6 +671,19 @@ let g:neocomplete#sources#dictionary#dictionaries = {
       \   'ruby': $HOME . '/.cache/dein/repos/github.com/pocke/dicts/ruby.dict',
       \ }
 
+" Called once right before you start selecting multiple cursors
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+
+" Called once only when the multiple selection is canceled (default <Esc>)
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
 " ================ NeoSnippet ====================
 let g:neosnippet#enable_snipmate_compatibility = 1
 " remove ${x} marker when switching normal mode
