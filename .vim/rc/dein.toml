@@ -185,6 +185,11 @@ repo = 'Shougo/neoyank.vim'
 repo = 'Quramy/tsuquyomi'
 on_ft = ['typescript']
 
+# GoでVim
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = ['go']
+
 # slim syntax
 [[plugins]]
 repo = 'slim-template/vim-slim'
