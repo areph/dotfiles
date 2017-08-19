@@ -137,7 +137,7 @@ eval "$(rbenv init - zsh)"
 
 export EDITOR=vim
 
-setopt extended_history
+#setopt extended_history
 
 alias r='ranger'
 alias rc='ranger-cd'
