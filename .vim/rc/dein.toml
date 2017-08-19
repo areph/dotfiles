@@ -190,6 +190,10 @@ on_ft = ['typescript']
 repo = 'fatih/vim-go'
 on_ft = ['go']
 
+# 非同期Linter
+[[plugins]]
+repo = 'w0rp/ale'
+
 # slim syntax
 [[plugins]]
 repo = 'slim-template/vim-slim'
