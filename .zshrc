@@ -115,6 +115,7 @@ function agvim () {
 
 export GOPATH="$HOME/.go"
 export PATH=$PATH:$HOME/.go/bin
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 ## Alias settings
 alias ll='ls -la'
