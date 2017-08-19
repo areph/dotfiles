@@ -194,6 +194,10 @@ on_ft = ['go']
 [[plugins]]
 repo = 'w0rp/ale'
 
+# vimhelp-ja
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
 # slim syntax
 [[plugins]]
 repo = 'slim-template/vim-slim'
