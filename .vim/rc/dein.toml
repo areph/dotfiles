@@ -103,6 +103,11 @@ on_ft = ['css', 'scss']
 repo = 'pangloss/vim-javascript'
 on_ft = ['javascript']
 
+# typescriptのsyntax-highlight
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = ['typescript']
+
 # Vimからブラウザオープン
 [[plugins]]
 repo = 'tyru/open-browser.vim'
@@ -175,4 +180,8 @@ repo = 'nathanaelkane/vim-indent-guides'
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
 
+# typescriptの補完など
+[[plugins]]
+repo = 'Quramy/tsuquyomi'
+on_ft = ['typescript']
 
