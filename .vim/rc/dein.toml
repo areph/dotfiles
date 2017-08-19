@@ -115,6 +115,10 @@ repo  = 'rcmdnk/vim-markdown'
 on_ft = ['markdown']
 
 [[plugins]]
+repo  = 'pocke/dicts'
+on_ft = ['ruby']
+
+[[plugins]]
 repo  = 'vim-ruby/vim-ruby'
 on_ft = ['ruby']
 
