@@ -237,6 +237,11 @@ nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 
+"" 次の検索結果
+nnoremap <C-n> :cn<CR>
+"" 前の検索結果
+nnoremap <C-p> :cp<CR>
+
 " カーソル移動をShiftと組み合わせたキーバインドで楽に
 noremap <S-h>   ^
 noremap <S-j>   }
@@ -263,8 +268,8 @@ let g:go_highlight_types = 1
 let g:go_highlight_operators = 1
 let g:go_highlight_build_constraints = 1
 
-nmap <silent> <C-p> <Plug>(ale_previous_wrap)
-nmap <silent> <C-i> <Plug>(ale_next_wrap)
+nmap <silent> <C-w>j <Plug>(ale_next_wrap)
+nmap <silent> <C-w>k <Plug>(ale_previous_wrap)
 let g:airline_section_error = '%{exists("ALEGetStatusLine") ? ALEGetStatusLine() : ""}'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
@@ -375,13 +380,14 @@ let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 set laststatus=2
 set t_Co=256
+let g:ruby_path = system('echo $HOME/.rbenv/shims')
 
 
 " ================ Quickrun & Watchdogs ====================
-augroup ansiesc
-  autocmd!
-  autocmd FileType quickrun AnsiEsc
-augroup END
+"augroup ansiesc
+"  autocmd!
+"  autocmd FileType quickrun AnsiEsc
+"augroup END
 
 " シンタックスチェックは<Leader>+wで行う
 nnoremap <Leader>w :<C-u>WatchdogsRun<CR>
@@ -691,14 +697,16 @@ let g:neosnippet#enable_auto_clear_markers = 1
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets/, ~/.cache/dein/repos/github.com/honza/vim-snippets/snippets/'
 " key-mappings.
-imap <Nul> <C-Space>
-imap <C-Space>     <Plug>(neosnippet_expand_or_jump)
-smap <C-Space>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-Space>     <Plug>(neosnippet_expand_target)
+imap <Nul> <C-k>
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
-imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')
@@ -771,3 +779,5 @@ nnoremap <C-k> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 
 " Renameコマンド
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+
+set laststatus=2
