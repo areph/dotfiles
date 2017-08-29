@@ -93,6 +93,50 @@ autocmd BufWritePre * :%s/\s\+$//ge
 colorscheme solarized
 set background=dark
 
+" 初期状態はcursorlineを表示しない
+" 以下の一行は必ずcolorschemeの設定後に追加すること
+hi clear CursorLine
+
+" 'cursorline' を必要な時にだけ有効にする
+" http://d.hatena.ne.jp/thinca/20090530/1243615055
+" を少し改造、number の highlight は常に有効にする
+augroup vimrc-auto-cursorline
+  autocmd!
+  autocmd CursorMoved,CursorMovedI * call s:auto_cursorline('CursorMoved')
+  autocmd CursorHold,CursorHoldI * call s:auto_cursorline('CursorHold')
+  autocmd WinEnter * call s:auto_cursorline('WinEnter')
+  autocmd WinLeave * call s:auto_cursorline('WinLeave')
+
+  setlocal cursorline
+  hi clear CursorLine
+
+  let s:cursorline_lock = 0
+  function! s:auto_cursorline(event)
+    if a:event ==# 'WinEnter'
+      setlocal cursorline
+      hi CursorLine term=underline cterm=underline guibg=Grey90 " ADD
+      let s:cursorline_lock = 2
+    elseif a:event ==# 'WinLeave'
+      setlocal nocursorline
+      hi clear CursorLine " ADD
+    elseif a:event ==# 'CursorMoved'
+      if s:cursorline_lock
+        if 1 < s:cursorline_lock
+          let s:cursorline_lock = 1
+        else
+          " setlocal nocursorline
+          hi clear CursorLine " ADD
+          let s:cursorline_lock = 0
+        endif
+      endif
+    elseif a:event ==# 'CursorHold'
+      " setlocal cursorline
+      hi CursorLine term=underline cterm=underline guibg=Grey90 " ADD
+      let s:cursorline_lock = 1
+    endif
+  endfunction
+augroup END
+
 " Indentation ---------------
 set autoindent
 set smartindent
@@ -193,6 +237,11 @@ nnoremap <S-Right> <C-w>><CR>
 nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 
+"" 次の検索結果
+nnoremap <C-n> :cn<CR>
+"" 前の検索結果
+nnoremap <C-p> :cp<CR>
+
 " カーソル移動をShiftと組み合わせたキーバインドで楽に
 noremap <S-h>   ^
 noremap <S-j>   }
@@ -211,12 +260,23 @@ augroup add_syntax_hilight
   autocmd BufNewFile,BufRead *.{md,mdwn,mkd,mkdn,mark*} set ft=markdown
 augroup END
 
+" go-vim
+let g:go_highlight_functions = 1
+let g:go_highlight_methods = 1
+let g:go_highlight_fields = 1
+let g:go_highlight_types = 1
+let g:go_highlight_operators = 1
+let g:go_highlight_build_constraints = 1
+
+nmap <silent> <C-w>j <Plug>(ale_next_wrap)
+nmap <silent> <C-w>k <Plug>(ale_previous_wrap)
+let g:airline_section_error = '%{exists("ALEGetStatusLine") ? ALEGetStatusLine() : ""}'
+let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
 " ================ lightline ====================
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
       \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'] ],
+      \   'left': [ [ 'mode', 'paste' ], [ 'fugitive', 'filename' ], ['ctrlpmark'], ['lint'] ],
       \   'right': [ [ 'syntastic', 'lineinfo' ], ['percent'], [ 'fileformat', 'fileencoding', 'filetype' ] ]
       \ },
       \ 'component_function': {
@@ -226,6 +286,7 @@ let g:lightline = {
       \   'filetype': 'LightLineFiletype',
       \   'fileencoding': 'LightLineFileencoding',
       \   'mode': 'LightLineMode',
+      \   'lint': 'Lint',
       \ },
       \ 'component_expand': {
       \   'syntaxcheck': 'qfstatusline#Update',
@@ -235,6 +296,10 @@ let g:lightline = {
       \ },
       \ 'subseparator': { 'left': '|', 'right': '|' }
       \ }
+
+function! Lint()
+  return exists('*ALEGetStatusLine') ? ALEGetStatusLine() : ''
+endfunction
 
 function! LightLineModified()
   return &ft =~ 'help' ? '' : &modified ? '+' : &modifiable ? '' : '-'
@@ -315,13 +380,14 @@ let g:vimfiler_force_overwrite_statusline = 0
 let g:vimshell_force_overwrite_statusline = 0
 set laststatus=2
 set t_Co=256
+let g:ruby_path = system('echo $HOME/.rbenv/shims')
 
 
 " ================ Quickrun & Watchdogs ====================
-augroup ansiesc
-  autocmd!
-  autocmd FileType quickrun AnsiEsc
-augroup END
+"augroup ansiesc
+"  autocmd!
+"  autocmd FileType quickrun AnsiEsc
+"augroup END
 
 " シンタックスチェックは<Leader>+wで行う
 nnoremap <Leader>w :<C-u>WatchdogsRun<CR>
@@ -611,6 +677,19 @@ let g:neocomplete#sources#dictionary#dictionaries = {
       \   'ruby': $HOME . '/.cache/dein/repos/github.com/pocke/dicts/ruby.dict',
       \ }
 
+" Called once right before you start selecting multiple cursors
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+
+" Called once only when the multiple selection is canceled (default <Esc>)
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
 " ================ NeoSnippet ====================
 let g:neosnippet#enable_snipmate_compatibility = 1
 " remove ${x} marker when switching normal mode
@@ -618,14 +697,16 @@ let g:neosnippet#enable_auto_clear_markers = 1
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets/, ~/.cache/dein/repos/github.com/honza/vim-snippets/snippets/'
 " key-mappings.
-imap <Nul> <C-Space>
-imap <C-Space>     <Plug>(neosnippet_expand_or_jump)
-smap <C-Space>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-Space>     <Plug>(neosnippet_expand_target)
+imap <Nul> <C-k>
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
-imap <expr><TAB> pumvisible() ? "\<C-n>" : neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-smap <expr><TAB> neosnippet#jumpable() ? "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For snippet_complete marker.
 if has('conceal')
@@ -696,3 +777,7 @@ nnoremap <leader>r :<C-U>RangerChooser<CR>
 " ctagsを別ウィンドウで開く
 nnoremap <C-k> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
 
+" Renameコマンド
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+
+set laststatus=2

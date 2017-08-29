@@ -103,6 +103,11 @@ on_ft = ['css', 'scss']
 repo = 'pangloss/vim-javascript'
 on_ft = ['javascript']
 
+# typescriptのsyntax-highlight
+[[plugins]]
+repo = 'leafgarland/typescript-vim'
+on_ft = ['typescript']
+
 # Vimからブラウザオープン
 [[plugins]]
 repo = 'tyru/open-browser.vim'
@@ -113,6 +118,10 @@ repo = 'kchmck/vim-coffee-script'
 [[plugins]]
 repo  = 'rcmdnk/vim-markdown'
 on_ft = ['markdown']
+
+[[plugins]]
+repo  = 'pocke/dicts'
+on_ft = ['ruby']
 
 [[plugins]]
 repo  = 'vim-ruby/vim-ruby'
@@ -171,4 +180,29 @@ repo = 'nathanaelkane/vim-indent-guides'
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
 
+# typescriptの補完など
+[[plugins]]
+repo = 'Quramy/tsuquyomi'
+on_ft = ['typescript']
+
+# GoでVim
+[[plugins]]
+repo = 'fatih/vim-go'
+on_ft = ['go']
+
+# 非同期Linter
+[[plugins]]
+repo = 'w0rp/ale'
+
+# vimhelp-ja
+[[plugins]]
+repo = 'vim-jp/vimdoc-ja'
+
+# slim syntax
+[[plugins]]
+repo = 'slim-template/vim-slim'
+
+# Markdown preview
+[[plugins]]
+repo = 'kannokanno/previm'
 

@@ -5,12 +5,6 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-export PATH=/usr/local/bin:$PATH
-export GOPATH=$HOME
-export PATH=$PATH:$GOPATH/bin
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-export PATH=$PATH:./node_modules/.bin
-
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -115,6 +109,7 @@ function agvim () {
 
 export GOPATH="$HOME/.go"
 export PATH=$PATH:$HOME/.go/bin
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8`
 
 ## Alias settings
 alias ll='ls -la'
@@ -137,7 +132,8 @@ eval "$(rbenv init - zsh)"
 
 export EDITOR=vim
 
-setopt extended_history
+#setopt extended_history
+setopt interactivecomments
 
 alias r='ranger'
 alias rc='ranger-cd'
@@ -165,7 +161,7 @@ cd(){
   builtin cd
 }
 
-function peco-ghq-src () {
+function peco-ghq-src() {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
@@ -176,7 +172,7 @@ function peco-ghq-src () {
 zle -N peco-ghq-src
 bindkey '^[' peco-ghq-src
 
-function peco-ghq-hub () {
+function peco-ghq-hub() {
   local selected_dir=$(ghq list | peco --query "$LBUFFER" | cut -d "/" -f 2,3)
   if [ -n "$selected_dir" ]; then
     BUFFER="hub browse ${selected_dir}"
@@ -190,3 +186,16 @@ bindkey '^]' peco-ghq-hub
 #alias ctags="`brew --prefix`/bin/ctags"
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
+
+# vimとshを切り替える
+toggle-shell() {
+  if [[ $#BUFFER -eq 0 ]]; then
+    BUFFER="fg"
+    zle accept-line
+  else
+    zle push-input
+    zle clear-screen
+  fi
+}
+zle -N toggle-shell
+bindkey '^Z' toggle-shell
