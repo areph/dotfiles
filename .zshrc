@@ -5,12 +5,6 @@
 #   Sorin Ionescu <sorin.ionescu@gmail.com>
 #
 
-export PATH=/usr/local/bin:$PATH
-export GOPATH=$HOME/gocode
-export PATH=$PATH:$GOPATH/bin
-export PATH=$HOME/.nodebrew/current/bin:$PATH
-export PATH=$PATH:./node_modules/.bin
-
 # Source Prezto.
 if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprezto/init.zsh"
@@ -139,6 +133,7 @@ eval "$(rbenv init - zsh)"
 export EDITOR=vim
 
 #setopt extended_history
+setopt interactivecomments
 
 alias r='ranger'
 alias rc='ranger-cd'
@@ -166,7 +161,7 @@ cd(){
   builtin cd
 }
 
-function peco-ghq-src () {
+function peco-ghq-src() {
   local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
@@ -177,7 +172,7 @@ function peco-ghq-src () {
 zle -N peco-ghq-src
 bindkey '^[' peco-ghq-src
 
-function peco-ghq-hub () {
+function peco-ghq-hub() {
   local selected_dir=$(ghq list | peco --query "$LBUFFER" | cut -d "/" -f 2,3)
   if [ -n "$selected_dir" ]; then
     BUFFER="hub browse ${selected_dir}"
