@@ -202,3 +202,7 @@ repo = 'vim-jp/vimdoc-ja'
 [[plugins]]
 repo = 'slim-template/vim-slim'
 
+# Markdown preview
+[[plugins]]
+repo = 'kannokanno/previm'
+
