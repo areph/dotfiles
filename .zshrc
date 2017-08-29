@@ -187,4 +187,6 @@ function peco-ghq-hub () {
 zle -N peco-ghq-hub
 bindkey '^]' peco-ghq-hub
 
-alias ctags="`brew --prefix`/bin/ctags"
+#alias ctags="`brew --prefix`/bin/ctags"
+alias pbcopy='xsel --clipboard --input'
+alias pbpaste='xsel --clipboard --output'
