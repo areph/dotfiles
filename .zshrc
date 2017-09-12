@@ -31,6 +31,11 @@ function peco-history-selection() {
   CURSOR=$#BUFFER
 }
 
+function fzf-history-selection() {
+  BUFFER=$(history -n 1 | fzf --tac --reverse --query "$LBUFFER")
+  CURSOR=$#BUFFER
+}
+
 zle -N peco-history-selection
 bindkey '^R' peco-history-selection
 
@@ -104,7 +109,7 @@ function ranger-cd {
 }
 
 function agvim () {
-  local selected=$(ag $@ | peco --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
+  local selected=$(ag $@ | fzf --query "$LBUFFER" | awk -F : '{print "-c " $2 " " $1}')
 
   if [ -n "$selected" ]; then
     local buf='vim '$selected
@@ -174,8 +179,16 @@ function peco-ghq-src() {
   fi
   zle clear-screen
 }
-zle -N peco-ghq-src
-bindkey '^[' peco-ghq-src
+function fzf-ghq-src() {
+  local selected_dir=$(ghq list -p | fzf --reverse --query "$LBUFFER")
+  if [ -n "$selected_dir" ]; then
+    BUFFER="cd ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N fzf-ghq-src
+bindkey '^[' fzf-ghq-src
 
 function peco-ghq-hub() {
   local selected_dir=$(ghq list | peco --query "$LBUFFER" | cut -d "/" -f 2,3)
@@ -185,12 +198,23 @@ function peco-ghq-hub() {
   fi
   zle clear-screen
 }
-zle -N peco-ghq-hub
-bindkey '^]' peco-ghq-hub
+function fzf-ghq-hub() {
+  local selected_dir=$(ghq list | fzf --reverse --query "$LBUFFER" | cut -d "/" -f 2,3)
+  if [ -n "$selected_dir" ]; then
+    BUFFER="hub browse ${selected_dir}"
+    zle accept-line
+  fi
+  zle clear-screen
+}
+zle -N fzf-ghq-hub
+bindkey '^]' fzf-ghq-hub
 
 #alias ctags="`brew --prefix`/bin/ctags"
-alias pbcopy='xsel --clipboard --input'
-alias pbpaste='xsel --clipboard --output'
+if type pbcopy 2>/dev/null 1>/dev/null
+then
+  alias pbcopy='xsel --clipboard --input'
+  alias pbpaste='xsel --clipboard --output'
+fi
 
 # vimとshを切り替える
 toggle-shell() {
@@ -204,3 +228,5 @@ toggle-shell() {
 }
 zle -N toggle-shell
 bindkey '^Z' toggle-shell
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
