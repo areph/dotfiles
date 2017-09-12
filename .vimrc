@@ -49,7 +49,7 @@ set gcr=a:blinkon0               "Disable cursor blink
 set visualbell                   "No sounds
 set autoread                     "Reload files changed outside vim
 "set cursorline                   "Display current cursol line
-set clipboard=unnamed,autoselect "Clipboard vim to terminal
+set clipboard=unnamed,autoselect,unnamedplus "Clipboard vim to terminal
 set formatoptions-=ro            "Comment line format off
 
 " Charset, Line ending -----------------
