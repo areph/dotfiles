@@ -179,7 +179,7 @@ function peco-ghq-src() {
   zle clear-screen
 }
 function fzf-ghq-src() {
-  local selected_dir=$(ghq list -p | fzf --reverse --query "$LBUFFER")
+  local selected_dir=$(ghq list -p | fzf --cycle --reverse --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
     BUFFER="cd ${selected_dir}"
     zle accept-line
