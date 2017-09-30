@@ -680,6 +680,7 @@ let g:neocomplete#lock_buffer_name_pattern        = '\*ku\*'
 
 let g:neocomplete#sources#dictionary#dictionaries = {
       \   'ruby': $HOME . '/.cache/dein/repos/github.com/pocke/dicts/ruby.dict',
+      \   'ruby.rails': $HOME . '/.cache/dein/repos/github.com/pocke/dicts/ruby.dict',
       \ }
 
 " Called once right before you start selecting multiple cursors
