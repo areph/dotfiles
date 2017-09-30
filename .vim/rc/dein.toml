@@ -148,10 +148,6 @@ on_ft = ['ruby']
 [[plugins]]
 repo = 'terryma/vim-multiple-cursors'
 
-# インデント可視化
-[[plugins]]
-repo = 'Yggdroot/indentLine'
-
 # ペースト時のインデントを無効
 [[plugins]]
 repo = 'ConradIrwin/vim-bracketed-paste'
@@ -167,14 +163,6 @@ repo = 'AndrewRadev/linediff.vim'
 # Vimプラグイン作成用ライブラリ群
 [[plugins]]
 repo = 'vim-jp/vital.vim'
-
-# Vim戦闘力スカウター
-[[plugins]]
-repo = 'thinca/vim-scouter'
-
-# インデントタブを可視化
-[[plugins]]
-repo = 'nathanaelkane/vim-indent-guides'
 
 # Yank&Register拡張
 [[plugins]]
