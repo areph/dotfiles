@@ -90,8 +90,8 @@ set wildignore+=*.png,*.jpg,*.gif
 autocmd BufWritePre * :%s/\s\+$//ge
 
 " ColorScheme ---------------
-colorscheme solarized
-set background=dark
+"colorscheme solarized
+"set background=dark
 
 " 初期状態はcursorlineを表示しない
 " 以下の一行は必ずcolorschemeの設定後に追加すること
