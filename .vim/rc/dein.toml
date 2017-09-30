@@ -198,3 +198,14 @@ repo = 'kannokanno/previm'
 [[plugins]]
 repo = 'uplus/vim-clurin'
 
+# display sepalate dispatcher
+[[plugins]]
+repo = 'tpope/vim-dispatch'
+
+# test-plugin
+[[plugins]]
+repo = 'janko-m/vim-test'
+depends = ['vim-dispatch']
+hook_add = '''
+let g:test#strategy = 'dispatch'
+'''
