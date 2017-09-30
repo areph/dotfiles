@@ -117,9 +117,6 @@ function agvim () {
   fi
 }
 
-export GOPATH="$HOME/.go"
-export PATH=$PATH:$HOME/.go/bin
-
 ## Alias settings
 alias ll='ls -la'
 alias la='ls -a'
@@ -135,9 +132,6 @@ alias gpl='git pull'
 alias less='less -r'
 
 alias rors='rails server -b 0.0.0.0'
-
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init - zsh)"
 
 export EDITOR=vim
 
