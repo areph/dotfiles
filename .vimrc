@@ -273,6 +273,11 @@ nmap <silent> <C-w>k <Plug>(ale_previous_wrap)
 let g:airline_section_error = '%{exists("ALEGetStatusLine") ? ALEGetStatusLine() : ""}'
 let g:ale_statusline_format = ['⨉ %d', '⚠ %d', '⬥ ok']
 
+nmap + <Plug>(clurin-next)
+nmap - <Plug>(clurin-prev)
+vmap + <Plug>(clurin-next)
+vmap - <Plug>(clurin-prev)
+
 " ================ lightline ====================
 let g:lightline = {
       \ 'active': {
