@@ -194,3 +194,7 @@ repo = 'slim-template/vim-slim'
 [[plugins]]
 repo = 'kannokanno/previm'
 
+# switch and circle
+[[plugins]]
+repo = 'uplus/vim-clurin'
+
