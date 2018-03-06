@@ -223,3 +223,13 @@ zle -N toggle-shell
 bindkey '^Z' toggle-shell
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+eval "$(direnv hook zsh)"
+
+export PATH="$HOME/.rbenv/bin:$PATH"
+eval "$(rbenv init - zsh)"
+
+alias open='xdg-open'
+
+# tabtab source for electron-forge package
+# uninstall by removing these lines or running `tabtab uninstall electron-forge`
+[[ -f /home/areph/work/ether/ganache/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /home/areph/work/ether/ganache/node_modules/tabtab/.completions/electron-forge.zsh
