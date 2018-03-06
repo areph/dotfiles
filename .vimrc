@@ -148,7 +148,8 @@ set expandtab
 
 " Display settings ---------------
 set list listchars=tab:\ \ ,trail:· "タブや空白を可視化
-set nowrap                          "行折り返ししない
+"set nowrap                          "行折り返ししない
+set wrap                          "行折り返す
 " インデントタブを可視化
 let g:indent_guides_enable_on_vim_startup = 1
 let g:indent_guides_guide_size = 1
