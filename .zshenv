@@ -10,9 +10,7 @@ if [[ ( "$SHLVL" -eq 1 && ! -o LOGIN ) && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; t
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
 
-export GOPATH="$HOME/.go"
-export PATH=$PATH:$HOME/.go/bin
-
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init - zsh)"
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/.go
+export PATH=$PATH:$GOPATH/bin
 
