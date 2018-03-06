@@ -243,12 +243,6 @@ nnoremap <C-n> :cn<CR>
 "" 前の検索結果
 nnoremap <C-p> :cp<CR>
 
-" カーソル移動をShiftと組み合わせたキーバインドで楽に
-noremap <S-h>   ^
-noremap <S-j>   }
-noremap <S-k>   {
-noremap <S-l>   $
-
 " Syntax highlight ---------------
 syntax enable                    "シンタクスハイライトを有効化
 augroup add_syntax_hilight
@@ -396,7 +390,7 @@ let g:ruby_path = system('echo $HOME/.rbenv/shims')
 "augroup END
 
 " シンタックスチェックは<Leader>+wで行う
-nnoremap <Leader>w :<C-u>WatchdogsRun<CR>
+"nnoremap <Leader>w :<C-u>WatchdogsRun<CR>
 
 let g:watchdogs_check_CursorHold_enable = 0
 let g:watchdogs_check_BufWritePost_enable = 0
@@ -632,7 +626,7 @@ function! s:unite_keymap()
   noremap <silent> [unite]ej :<C-u>Unite rails/javascript<CR>
   noremap <silent> [unite]er :<C-u>Unite rails/route<CR>
   noremap <silent> [unite]eg :<C-u>Unite rails/gemfile<CR>
-  noremap <silent> [unite]et :<C-u>Unite rails/spec<CR>
+  noremap <silent> [unite]et :<C-u>Unite rails/spec rails/minitest<CR>
   noremap <silent> [unite]el :<C-u>Unite rails/log<CR>
   noremap <silent> [unite]ed :<C-u>Unite rails/db<CR>
 
@@ -704,10 +698,10 @@ let g:neosnippet#enable_auto_clear_markers = 1
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.cache/dein/repos/github.com/Shougo/neosnippet-snippets/neosnippets/, ~/.cache/dein/repos/github.com/honza/vim-snippets/snippets/'
 " key-mappings.
-imap <Nul> <C-k>
-imap <C-k>     <Plug>(neosnippet_expand_or_jump)
-smap <C-k>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-k>     <Plug>(neosnippet_expand_target)
+"inoremap <Nul> <C-k>
+"imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+"xmap <C-k>     <Plug>(neosnippet_expand_target)
 
 " SuperTab like snippets behavior.
 " Note: It must be "imap" and "smap".  It uses <Plug> mappings.
