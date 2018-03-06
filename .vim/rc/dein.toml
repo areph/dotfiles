@@ -214,3 +214,11 @@ let g:test#strategy = 'dispatch'
 [[plugins]]
 repo  = 'thinca/vim-ref'
 
+# vimからtigを使う
+[[plugins]]
+repo  = 'iberianpig/tig-explorer.vim'
+
+# vimからrangerを使う
+[[plugins]]
+repo  = 'iberianpig/ranger-explorer.vim'
+
