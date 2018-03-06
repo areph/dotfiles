@@ -194,8 +194,8 @@ nnoremap Q q
 nnoremap q <Nop>
 
 " コメントアウトトグル
-nmap <Leader>c <Plug>(caw:i:toggle)
-vmap <Leader>c <Plug>(caw:i:toggle)
+nmap <C-_> <Plug>(caw:i:toggle)
+vmap <C-_> <Plug>(caw:i:toggle)
 
 " ペースト時にインデントさせない
 nnoremap p p=`]<C-o>
