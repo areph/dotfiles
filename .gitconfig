@@ -3,6 +3,8 @@
   email = 40balmung@gmail.com
 [color]
   ui = auto
+[web]
+  browser = google-chrome
 [alias]
   amend = commit --amend -C HEAD
   co = checkout
@@ -15,6 +17,9 @@
   cim = commit -m
   ci = commit
   fe = fetch
+  pr = browse-remote --pr
+  see = browse
+  issues = browse -- issues
 [push]
   default = current
 [core]
