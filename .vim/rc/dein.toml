@@ -222,3 +222,7 @@ repo  = 'iberianpig/tig-explorer.vim'
 [[plugins]]
 repo  = 'iberianpig/ranger-explorer.vim'
 
+# 自動保存
+[[plugins]]
+repo  = 'vim-scripts/vim-auto-save'
+
