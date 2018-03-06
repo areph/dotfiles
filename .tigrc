@@ -1,0 +1,25 @@
+# main view の左端にコミットIDを表示する
+set main-view = id date author:email-user commit-title:graph=yes,refs=yes
+
+# blame view の行数表示をON、intervalを1に
+set blame-view  = date:default author:email-user id:yes,color line-number:yes,interval=1 text
+
+# 差分表示に diff-highlight を使う (要 tig 2.2.1 以降. diff-highlight が $PATH にあること)
+set diff-highlight = true
+
+# 横分割に強制する
+set vertical-split = no
+
+# D でトラッキングされていないファイルを削除 (status-view)
+bind status  D      ?git clean -d -f -- %(file)
+
+# x でトラッキングされていないファイルをすべて削除
+bind main    x      ?git clean -d -f
+bind status  x      ?git clean -d -f
+
+# x でマージ済みローカルブランチをすべて削除 (master/develop 除く)
+bind refs    x      ?sh -c "git branch --merged | grep -vE '^\\*|master$|develop$' | xargs -I % git branch -d %"
+
+# P でブランチをpush
+bind branch P !git push origin %(branch)
+bind status P !git push origin %(branch)
