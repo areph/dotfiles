@@ -181,7 +181,7 @@ function fzf-ghq-src() {
   zle clear-screen
 }
 zle -N fzf-ghq-src
-bindkey '^[' fzf-ghq-src
+bindkey '^s' fzf-ghq-src
 
 function peco-ghq-hub() {
   local selected_dir=$(ghq list | peco --query "$LBUFFER" | cut -d "/" -f 2,3)
