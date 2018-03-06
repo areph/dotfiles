@@ -226,3 +226,6 @@ repo  = 'iberianpig/ranger-explorer.vim'
 [[plugins]]
 repo  = 'vim-scripts/vim-auto-save'
 
+# 英英辞書
+[[plugins]]
+repo  = 'mmisono/ref-dicts-en'

@@ -760,6 +760,43 @@ vnoremap [explorer]g y:TigGrep<Space><C-R>"<CR>
 nnoremap [explorer]c :<C-u>RangerOpenCurrentDir<CR>
 nnoremap [explorer]f :<C-u>RangerOpenProjectRootDir<CR>
 
+" 辞書定義
+let g:ref_source_webdict_sites = {
+      \   'je': {
+      \     'url': 'http://eow.alc.co.jp/search?q=%s',
+      \   },
+      \   'ej': {
+      \     'url': 'http://eow.alc.co.jp/search?q=%s',
+      \   },
+      \ }
+
+" デフォルトサイト
+let g:ref_source_webdict_sites.default = 'ej'
+
+" 出力に対するフィルタ
+" 最初の数行邪魔なので削除
+function! g:ref_source_webdict_sites.je.filter(output)
+  let l:str = substitute(a:output, '       単語帳', '', 'g')
+  return join(split(str, "\n")[28 :], "\n")
+endfunction
+
+function! g:ref_source_webdict_sites.ej.filter(output)
+  let l:str = substitute(a:output, '       単語帳',' ', 'g')
+  return join(split(str, "\n")[28 :], "\n")
+endfunction
+
+" キーマッピング
+" カーソル位置にある英単語を辞書検索
+nnoremap [explorer]e :<C-u>:Ref webdict ej<Space><C-R><C-W><CR>
+
+" コマンド定義
+" 英語から日本語を調べる
+command! -nargs=1 E2j Ref webdict ej <args>
+" 日本語から英語を調べる
+command! -nargs=1 J2e Ref webdict je <args>
+" 英英辞書を引く
+command! -nargs=1 E2e Ref answers <args>
+
 " ================ Ctags  ====================
 " ctagsを別ウィンドウで開く
 nnoremap <C-k> :vsp<CR> :exe("tjump ".expand('<cword>'))<CR>
