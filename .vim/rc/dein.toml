@@ -209,3 +209,8 @@ depends = ['vim-dispatch']
 hook_add = '''
 let g:test#strategy = 'dispatch'
 '''
+
+# リファレンス
+[[plugins]]
+repo  = 'thinca/vim-ref'
+
