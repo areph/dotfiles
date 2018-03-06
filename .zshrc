@@ -133,7 +133,9 @@ alias less='less -r'
 
 alias rors='rails server -b 0.0.0.0'
 
+# Vim
 export EDITOR=vim
+export PATH=~/vim/src/:$PATH #ビルドしたVimを使用
 
 #setopt extended_history
 setopt interactivecomments
