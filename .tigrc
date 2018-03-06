@@ -23,3 +23,6 @@ bind refs    x      ?sh -c "git branch --merged | grep -vE '^\\*|master$|develop
 # P でブランチをpush
 bind branch P !git push origin %(branch)
 bind status P !git push origin %(branch)
+
+# + で commit --amend
+bind generic +      !git commit --amend --allow-empty
