@@ -17,8 +17,8 @@
   cim = commit -m
   ci = commit
   fe = fetch
-  pr = browse-remote --pr
-  see = browse
+  see = browse-remote --pr
+  br = browse
   issues = browse -- issues
 [push]
   default = current
