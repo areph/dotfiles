@@ -227,11 +227,15 @@ bindkey '^Z' toggle-shell
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 eval "$(direnv hook zsh)"
 
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init - zsh)"
+#export PATH="$HOME/.rbenv/bin:$PATH"
+#eval "$(rbenv init - zsh)"
+PATH="$HOME/.anyenv/bin:$PATH"
+eval "$(anyenv init -)"
 
 alias open='xdg-open'
 alias git=hub
+
+export PATH="$PATH:`yarn global bin`"
 
 # tabtab source for electron-forge package
 # uninstall by removing these lines or running `tabtab uninstall electron-forge`
