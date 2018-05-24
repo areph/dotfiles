@@ -229,3 +229,7 @@ repo  = 'vim-scripts/vim-auto-save'
 # 英英辞書
 [[plugins]]
 repo  = 'mmisono/ref-dicts-en'
+
+# solidity
+[[plugins]]
+repo  = 'tomlion/vim-solidity'
