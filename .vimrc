@@ -503,6 +503,7 @@ let g:unite_source_menu_menus.shortcut.candidates = [
       \   [ "zshrc"  , "~/.zshrc"],
       \   [ "vimrc"  , "~/.vimrc"],
       \   [ "tigrc"  , "~/.tigrc"],
+      \   [ "tmux_conf"  , "~/.tmux.conf"],
       \   [ "dein.toml"  , "~/dotfiles/.vim/rc/dein.toml"],
       \   [ "Github", "OpenBrowser https://github.com/" ],
       \   [ "Gist", "OpenBrowser https://gist.github.com/" ],
