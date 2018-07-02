@@ -242,7 +242,7 @@ function vim() {
   if [ "$1" = "" ]; then
     command vim -c ":Unite file_mru"
   else
-    command vim $1
+    command vim $*
   fi
 }
 alias vi='vim'
