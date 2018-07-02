@@ -89,6 +89,8 @@ set wildignore+=*.png,*.jpg,*.gif
 " 保存時に最後尾の空白を削除
 autocmd BufWritePre * :%s/\s\+$//ge
 
+set helplang=ja,en
+
 " ColorScheme ---------------
 "colorscheme solarized
 "set background=dark
