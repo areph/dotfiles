@@ -238,7 +238,13 @@ alias git=hub
 export PATH="$PATH:`yarn global bin`"
 
 
-alias vim='vim -c ":Unite file_mru"'
+function vim() {
+  if [ "$1" = "" ]; then
+    command vim -c ":Unite file_mru"
+  else
+    command vim $1
+  fi
+}
 alias vi='vim'
 
 # tabtab source for electron-forge package
