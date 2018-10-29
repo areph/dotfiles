@@ -197,7 +197,8 @@ set gdefault                        "置換の際にg指定しなくても繰り
 set cmdheight=2
 
 " Leader setting ---------------
-"let mapleader="," "leaderキーを潰さずにExplorer操作へ統一
+"nmap s <Nop>
+let mapleader = "s" "leaderキーを潰さずにExplorer操作へ統一
 
 " Key Binding ---------------
 " 英字配列用にノーマルモードでは;:入れ替え
