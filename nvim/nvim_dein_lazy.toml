@@ -53,3 +53,10 @@ repo = 'Shougo/neosnippet-snippets'
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
+
+
+# 英単語補完
+[[plugins]]
+repo = 'ujihisa/neco-look'
+
+

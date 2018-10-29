@@ -1,2 +1,51 @@
 [[plugins]]
 repo = 'Shougo/dein.vim'
+
+# ファイルタイプごとにコメントアウト切り替え
+[[plugins]]
+repo = 'tyru/caw.vim'
+
+# 非同期Linter
+[[plugins]]
+repo = 'w0rp/ale'
+
+# Powerline
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+hook_add = '''
+  let g:airline_powerline_fonts = 1
+  set laststatus=2
+'''
+
+# Vimからブラウザオープン
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+
+# マルチカーソル
+[[plugins]]
+repo = 'terryma/vim-multiple-cursors'
+
+# vimからtigを使う
+[[plugins]]
+repo  = 'iberianpig/tig-explorer.vim'
+
+# vimからrangerを使う
+[[plugins]]
+repo  = 'iberianpig/ranger-explorer.vim'
+
+# 自動保存
+[[plugins]]
+repo  = 'vim-scripts/vim-auto-save'
+
+# vimが参照するパスをproject rootにする
+[[plugins]]
+repo  = 'airblade/vim-rooter'
+
+# fzf
+[[plugins]]
+repo  = 'junegunn/fzf'
+build = './install --all'
+merged = 0
+
+[[plugins]]
+repo  = 'junegunn/fzf.vim'
