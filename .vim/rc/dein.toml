@@ -213,3 +213,5 @@ repo  = 'mmisono/ref-dicts-en'
 # solidity
 [[plugins]]
 repo  = 'tomlion/vim-solidity'
+on_ft = ['solidity']
+
