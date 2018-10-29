@@ -674,6 +674,7 @@ vmap , [explorer]
 nnoremap [explorer]T :TigOpenCurrentFile<CR>
 nnoremap [explorer]t :TigOpenProjectRootDir<CR>
 nnoremap [explorer]g :TigGrep<space>
+nnoremap [explorer]b :TigBlame<space>
 ""選択状態のキーワードで検索"
 vnoremap [explorer]g y:TigGrep<Space><C-R>"<CR>
 ""カーソル上のキーワードで検索
