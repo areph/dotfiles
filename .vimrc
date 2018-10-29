@@ -148,6 +148,19 @@ set softtabstop=2
 set tabstop=2
 set expandtab
 
+" プロジェクトごとにlocalファイルがあればそれを読み込む
+augroup vimrc-local
+  autocmd!
+  autocmd BufNewFile,BufReadPost * call s:vimrc_local(expand('<afile>:p:h'))
+augroup END
+
+function! s:vimrc_local(loc)
+  let files = findfile('.vimrc.local', escape(a:loc, ' ') . ';', -1)
+  for i in reverse(filter(files, 'filereadable(v:val)'))
+    source `=i`
+  endfor
+endfunction
+
 " Display settings ---------------
 set list listchars=tab:\ \ ,trail:· "タブや空白を可視化
 "set nowrap                          "行折り返ししない
