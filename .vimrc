@@ -898,6 +898,13 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
 set laststatus=2
 
+let g:ale_linters = {'javascript': ['eslint', 'flow']}
+let g:ale_fixers = {
+      \'ruby':       ['rubocop'],
+      \'json':       ['fixjson'],
+      \'javascript': ['eslint']
+      \}
+
 augroup vimrc-auto-mkdir  " {{{
   autocmd!
   autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
