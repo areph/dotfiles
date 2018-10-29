@@ -905,6 +905,9 @@ let g:ale_fixers = {
       \'javascript': ['eslint']
       \}
 
+set tags+=.tags
+set tags+=.Gemfile.lock.tags
+
 augroup vimrc-auto-mkdir  " {{{
   autocmd!
   autocmd BufWritePre * call s:auto_mkdir(expand('<afile>:p:h'), v:cmdbang)
