@@ -36,6 +36,10 @@ build = 'make'
 [[plugins]]
 repo = 'osyo-manga/shabadou.vim'
 
+# Vimプラグイン用
+[[plugins]]
+repo = 'vim-jp/vital.vim'
+
 # quickfixの内容をステータスバーに表示
 [[plugins]]
 repo = 'KazuakiM/vim-qfstatusline'
@@ -140,10 +144,6 @@ on_ft = ['ruby']
 [[plugins]]
 repo = 'terryma/vim-multiple-cursors'
 
-# ペースト時のインデントを無効
-[[plugins]]
-repo = 'ConradIrwin/vim-bracketed-paste'
-
 # ファイルタイプごとにコメントアウト切り替え
 [[plugins]]
 repo = 'tyru/caw.vim'
@@ -152,18 +152,9 @@ repo = 'tyru/caw.vim'
 [[plugins]]
 repo = 'AndrewRadev/linediff.vim'
 
-# Vimプラグイン作成用ライブラリ群
-[[plugins]]
-repo = 'vim-jp/vital.vim'
-
 # Yank&Register拡張
 [[plugins]]
 repo = 'Shougo/neoyank.vim'
-
-# typescriptの補完など
-[[plugins]]
-repo = 'Quramy/tsuquyomi'
-on_ft = ['typescript']
 
 # GoでVim
 [[plugins]]
@@ -181,10 +172,7 @@ repo = 'vim-jp/vimdoc-ja'
 # slim syntax
 [[plugins]]
 repo = 'slim-template/vim-slim'
-
-# Markdown preview
-[[plugins]]
-repo = 'kannokanno/previm'
+on_ft = ['slim']
 
 # switch and circle
 [[plugins]]
