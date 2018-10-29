@@ -712,6 +712,8 @@ endfunction
 " キーマッピング
 " カーソル位置にある英単語を辞書検索
 nnoremap [explorer]e :<C-u>:Ref webdict ej<Space><C-R><C-W><CR>
+" 選択した英文を日本語翻訳
+vnoremap [explorer]e !trans -b -sl=en -tl=ja<Space><C-R><C-W><CR>
 
 " コマンド定義
 " 英語から日本語を調べる
@@ -720,6 +722,8 @@ command! -nargs=1 E2j Ref webdict ej <args>
 command! -nargs=1 J2e Ref webdict je <args>
 " 英英辞書を引く
 command! -nargs=1 E2e Ref answers <args>
+" 英文翻訳
+command! -nargs=1 E2t trans_e2j <args>
 
 " ================ Ctags  ====================
 " ctagsを別ウィンドウで開く
