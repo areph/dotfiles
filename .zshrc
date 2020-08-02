@@ -37,7 +37,7 @@ function fzf-history-selection() {
 }
 
 zle -N peco-history-selection
-bindkey '^R' peco-history-selection
+bindkey '^R' fzf-history-selection
 
 function tmux_automatically_attach_session()
 {
