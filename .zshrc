@@ -243,3 +243,4 @@ alias vi='vim'
 # tabtab source for electron-forge package
 # uninstall by removing these lines or running `tabtab uninstall electron-forge`
 [[ -f /home/areph/work/ether/ganache/node_modules/tabtab/.completions/electron-forge.zsh ]] && . /home/areph/work/ether/ganache/node_modules/tabtab/.completions/electron-forge.zsh
+export PATH=$PATH:/mnt/c/Windows/System32/cmd.exe
