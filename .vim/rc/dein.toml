@@ -64,10 +64,6 @@ repo = 'tpope/vim-fugitive'
 [[plugins]]
 repo = 'KazuakiM/vim-qfsigns'
 
-# wakatimeでの操作ログ取得
-[[plugins]]
-repo = 'wakatime/vim-wakatime'
-
 # snippet plugin
 [[plugins]]
 repo = 'Shougo/neosnippet.vim'
