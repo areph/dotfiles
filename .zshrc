@@ -19,24 +19,18 @@ function is_screen_or_tmux_running() { is_screen_running || is_tmux_runnning; }
 function shell_has_started_interactively() { [ ! -z "$PS1" ]; }
 function is_ssh_running() { [ ! -z "$SSH_CONECTION" ]; }
 
-
-function peco-history-selection() {
-  local tac
-  if which tac > /dev/null; then
-    tac="tac"
-  else
-    tac="tail -r"
-  fi
-  BUFFER=$(history -n 1 | eval $tac | awk '!a[$0]++' | peco --query "$LBUFFER")
-  CURSOR=$#BUFFER
-}
+source /home/linuxbrew/.linuxbrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+[[ ! -f ~/.p10k.zsh  ]] || source ~/.p10k.zsh
+autoload -Uz promptinit
+promptinit
+prompt powerlevel10k
 
 function fzf-history-selection() {
   BUFFER=$(history -n 1 | fzf --tac --reverse --query "$LBUFFER")
   CURSOR=$#BUFFER
 }
 
-zle -N peco-history-selection
+zle -N fzf-history-selection
 bindkey '^R' fzf-history-selection
 
 function tmux_automatically_attach_session()
@@ -84,19 +78,6 @@ function tmux_automatically_attach_session()
 }
 tmux_automatically_attach_session
 
-# rangerのサブシェルの中でrangerがネストしない設定
-function ranger() {
-  if [ -z "$RANGER_LEVEL" ]; then
-    if type /usr/local/bin/ranger > /dev/null 2>&1; then
-      /usr/local/bin/ranger $@
-    elif type /usr/bin/ranger > /dev/null 2>&1; then
-      /usr/bin/ranger $@
-    fi
-  else
-    exit
-  fi
-}
-
 # rangerで`q`で抜けた時のディレクトリにcdするスクリプト
 function ranger-cd {
   tempfile="$(mktemp -t tmp.XXXXXX)"
@@ -118,7 +99,7 @@ function agvim () {
 }
 
 ## Alias settings
-alias ll='ls -la'
+alias ll='exa -l -aa -h -@ -m --icons --git --time-style=long-iso --color=automatic --group-directories-first'
 alias la='ls -a'
 
 # Git
@@ -148,32 +129,6 @@ alias brm='b rake db:migrate'
 alias brs='b rake db:migrate:reset'
 alias ag='ag -S --stats --pager "less -F"'
 
-cd(){
-  # 引数ありのときはそのままビルトインをコール
-  if [ $# -gt 0 ]; then
-    builtin cd "$@"
-    return
-  fi
-
-  # 引数無しでプロジェクトディレクトリの中にいるときはプロジェクトルートに移動
-  local gitroot=`git rev-parse --show-toplevel 2>/dev/null`
-  if [ ! "$gitroot" = "" ]; then
-    builtin cd "$gitroot"
-    return
-  fi
-
-  # それ以外はそのままビルトインをコール
-  builtin cd
-}
-
-function peco-ghq-src() {
-  local selected_dir=$(ghq list -p | peco --query "$LBUFFER")
-  if [ -n "$selected_dir" ]; then
-    BUFFER="cd ${selected_dir}"
-    zle accept-line
-  fi
-  zle clear-screen
-}
 function fzf-ghq-src() {
   local selected_dir=$(ghq list -p | fzf --cycle --reverse --query "$LBUFFER")
   if [ -n "$selected_dir" ]; then
@@ -185,14 +140,6 @@ function fzf-ghq-src() {
 zle -N fzf-ghq-src
 bindkey '^s' fzf-ghq-src
 
-function peco-ghq-hub() {
-  local selected_dir=$(ghq list | peco --query "$LBUFFER" | cut -d "/" -f 2,3)
-  if [ -n "$selected_dir" ]; then
-    BUFFER="hub browse ${selected_dir}"
-    zle accept-line
-  fi
-  zle clear-screen
-}
 function fzf-ghq-hub() {
   local selected_dir=$(ghq list | fzf --reverse --query "$LBUFFER" | cut -d "/" -f 2,3)
   if [ -n "$selected_dir" ]; then
@@ -237,6 +184,9 @@ alias git=hub
 
 export PATH="$PATH:`yarn global bin`"
 
+fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+autoload -U compinit
+compinit -u
 
 alias vi='vim'
 
